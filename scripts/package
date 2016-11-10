@@ -1,0 +1,23 @@
+#!/bin/bash
+set -e
+
+source $(dirname $0)/version
+
+ARCH=${ARCH:-"amd64"}
+SUFFIX=""
+[ "${ARCH}" != "amd64" ] && SUFFIX="_${ARCH}"
+
+cd $(dirname $0)/../package
+
+TAG=${TAG:-${VERSION}${SUFFIX}}
+REPO=${REPO:-rancher}
+
+if echo $TAG | grep -q dirty; then
+    TAG=dev
+fi
+
+tar xvzf $DOWNLOAD/k8s.tar.gz --strip-components=3 kubernetes/server/bin/{kubelet,kube-proxy,kube-apiserver,kube-controller-manager,kube-scheduler}
+
+docker build -t ${REPO}/k8s:${TAG} .
+
+echo Built ${REPO}/k8s:${TAG}
