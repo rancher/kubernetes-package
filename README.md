@@ -5,6 +5,8 @@ Packaging of Kubernetes for Rancher
 
 ## Building
 
+Update `Dockerfile.dapper` with the URL of your k8s release then
+
 `make`
 
 ## License
