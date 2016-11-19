@@ -1,0 +1,17 @@
+#!/bin/bash
+
+shift 1
+
+while [ "$#" -gt 0 ]; do
+    if [ "$1" = "-e" ]; then
+        shift 2
+    else
+        break
+    fi
+done
+
+export DOCKER_API_VERSION=1.22
+PID=$(docker inspect -f '{{.State.Pid}}' $1)
+
+shift 1
+nsenter -m -u -i -n -p -t $PID "$@" 
