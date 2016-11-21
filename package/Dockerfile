@@ -33,6 +33,8 @@ RUN mkdir -p /opt/loopback/bin \
        tar xvzf - -C /tmp ./loopback \
     && mv /tmp/loopback /opt/loopback/bin
 
-COPY runc-1.10 entry.sh kubelet kube-proxy kube-apiserver kube-controller-manager kube-scheduler /usr/bin/
+COPY runc-1.10 entry.sh addons-update.sh kubectl kubelet kube-proxy kube-apiserver kube-controller-manager kube-scheduler /usr/bin/
+RUN mkdir -p /etc/kubernetes/addons
+COPY kubernetes/cluster/addons/dns /etc/kubernetes/addons/
 
 ENTRYPOINT ["/usr/bin/entry.sh"]
