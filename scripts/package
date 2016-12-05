@@ -16,7 +16,15 @@ if echo $TAG | grep -q dirty; then
     TAG=dev
 fi
 
-tar xvzf $DOWNLOAD/k8s.tar.gz --strip-components=3 kubernetes/server/bin/{kubelet,kube-proxy,kube-apiserver,kube-controller-manager,kube-scheduler}
+tar xvzf $DOWNLOAD/k8s.tar.gz --strip-components=3 kubernetes/server/bin/{kubelet,kube-proxy,kube-apiserver,kube-controller-manager,kube-scheduler,kubectl}
+tar xvzf $DOWNLOAD/k8s.tar.gz kubernetes/kubernetes-src.tar.gz
+tar xvzf kubernetes/kubernetes-src.tar.gz -C kubernetes
+tar xvzf kubernetes/kube-source.tar.gz -C kubernetes --wildcards ./cluster/addons/dns/*.yaml.sed
+
+for t in kubernetes/cluster/addons/dns/*.yaml.sed; do
+    sed -f dns.sed <${t} >${t%.sed} && rm ${t}
+    echo ${t%.sed}
+done
 
 docker build -t ${REPO}/k8s:${TAG} .
 
