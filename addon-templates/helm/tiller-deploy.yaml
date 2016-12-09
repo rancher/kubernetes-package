@@ -21,11 +21,3 @@ spec:
       containers:
           - name: helm-tiller
             image: gcr.io/kubernetes-helm/tiller:v2.0.0 
-            resources:
-              # keep request = limit to keep this container in guaranteed class
-              limits:
-              cpu: 100m
-              memory: 50Mi
-            requests:
-              cpu: 100m
-              memory: 50Mi
