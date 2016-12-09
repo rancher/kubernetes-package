@@ -8,5 +8,5 @@ done
 
 
 for f in $(find /etc/kubernetes/addons -name '*.yaml'); do
-  echo "---" && cat $f
-done | kubectl --kubeconfig=/etc/kubernetes/ssl/kubeconfig --namespace=kube-system replace --force -f -
+  kubectl --kubeconfig=/etc/kubernetes/ssl/kubeconfig --namespace=kube-system replace --force -f ${f} || :
+done
