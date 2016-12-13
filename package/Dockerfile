@@ -37,6 +37,5 @@ COPY runc-1.10 entry.sh addons-update.sh kubectl kubelet kube-proxy kube-apiserv
 RUN mkdir -p /etc/kubernetes/addons
 COPY kubernetes/cluster/addons/dns /etc/kubernetes/addons/
 COPY kubernetes/cluster/addons/dashboard /etc/kubernetes/addons/
-COPY kubernetes/cluster/addons/helm /etc/kubernetes/addons/
 
 ENTRYPOINT ["/usr/bin/entry.sh"]
