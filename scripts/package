@@ -28,7 +28,6 @@ for t in kubernetes/cluster/addons/dns/*.yaml.sed; do
 done
 
 cp -r ../addon-templates/dashboard kubernetes/cluster/addons/
-cp -r ../addon-templates/helm kubernetes/cluster/addons/
 
 docker build -t ${REPO}/k8s:${TAG} .
 
