@@ -19,7 +19,7 @@ fi
 tar xvzf $DOWNLOAD/k8s.tar.gz --strip-components=3 kubernetes/server/bin/{kubelet,kube-proxy,kube-apiserver,kube-controller-manager,kube-scheduler,kubectl}
 tar xvzf $DOWNLOAD/k8s.tar.gz kubernetes/kubernetes-src.tar.gz
 tar xvzf kubernetes/kubernetes-src.tar.gz -C kubernetes
-tar xvzf kubernetes/kube-source.tar.gz -C kubernetes --wildcards \
+tar xvzf kubernetes/kubernetes-src.tar.gz -C kubernetes --wildcards \
                                 ./cluster/addons/dns/*.yaml.sed 
 
 for t in kubernetes/cluster/addons/dns/*.yaml.sed; do
