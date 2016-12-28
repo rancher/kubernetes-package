@@ -14,6 +14,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -y \
     jq \
     unzip \
     git \
+    wget \
     glusterfs-client \
     ceph-fs-common \
     ceph-common \
@@ -32,6 +33,9 @@ RUN mkdir -p /opt/loopback/bin \
     && curl -sfSL https://github.com/rancher/cni/releases/download/${CNI}/cni-${CNI}.tar.gz | \
        tar xvzf - -C /tmp ./loopback \
     && mv /tmp/loopback /opt/loopback/bin
+ENV SSL_SCRIPT_COMMIT 98660ada3d800f653fc1f105771b5173f9d1a019
+RUN wget -O /usr/bin/update-rancher-ssl https://raw.githubusercontent.com/rancher/rancher/${SSL_SCRIPT_COMMIT}/server/bin/update-rancher-ssl && \
+    chmod +x /usr/bin/update-rancher-ssl
 
 COPY runc-1.10 entry.sh addons-update.sh kubectl kubelet kube-proxy kube-apiserver kube-controller-manager kube-scheduler /usr/bin/
 RUN mkdir -p /etc/kubernetes/addons
