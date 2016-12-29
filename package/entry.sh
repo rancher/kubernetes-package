@@ -6,6 +6,8 @@ while ! curl -s -f http://rancher-metadata/2015-12-19/stacks/Kubernetes/services
     sleep 1
 done
 
+/usr/bin/update-rancher-ssl
+
 UUID=$(curl -s http://rancher-metadata/2015-12-19/stacks/Kubernetes/services/kubernetes/uuid)
 ACTION=$(curl -s -u $CATTLE_ACCESS_KEY:$CATTLE_SECRET_KEY "$CATTLE_URL/services?uuid=$UUID" | jq -r '.data[0].actions.certificate')
 KUBERNETES_URL=${KUBERNETES_URL:-https://kubernetes:6443}
@@ -39,8 +41,6 @@ users:
     client-key: /etc/kubernetes/ssl/key.pem
 EOF
 fi
-
-/usr/bin/update-rancher-ssl
 
 if [ "$1" == "kubelet" ]; then
     for i in $(DOCKER_API_VERSION=1.22 ./docker info 2>&1  | grep -i 'docker root dir' | cut -f2 -d:) /var/lib/docker /run /var/run; do
