@@ -7,7 +7,6 @@ metadata:
     k8s-app: kubernetes-dashboard
     kubernetes.io/cluster-service: "true"
 spec:
-  type: NodePort
   selector:
     k8s-app: kubernetes-dashboard
   ports:
