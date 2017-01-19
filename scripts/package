@@ -28,6 +28,7 @@ done
 
 cp -r ../addon-templates/dashboard kubernetes/cluster/addons/
 cp -r ../addon-templates/helm kubernetes/cluster/addons/
+cp -r ../addon-templates/heapster kubernetes/cluster/addons/
 
 docker build -t ${REPO}/k8s:${TAG} .
 

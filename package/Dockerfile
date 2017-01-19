@@ -42,5 +42,6 @@ RUN mkdir -p /etc/kubernetes/addons
 COPY kubernetes/cluster/addons/dns /etc/kubernetes/addons/
 COPY kubernetes/cluster/addons/dashboard /etc/kubernetes/addons/
 COPY kubernetes/cluster/addons/helm /etc/kubernetes/addons/
+COPY kubernetes/cluster/addons/heapster /etc/kubernetes/addons/
 
 ENTRYPOINT ["/usr/bin/entry.sh"]
