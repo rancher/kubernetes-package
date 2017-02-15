@@ -18,12 +18,12 @@ spec:
       serviceAccountName: "io-rancher-system"
       containers:
       - name: influxdb
-        image: kubernetes/heapster_influxdb:v0.5
+        image: $DOCKER_IO_REGISTRY/kubernetes/heapster_influxdb:v0.5
         volumeMounts:
         - mountPath: /data
           name: influxdb-storage
       - name: grafana
-        image: gcr.io/google_containers/heapster_grafana:v2.6.0-2
+        image: $GCR_IO_REGISTRY/google_containers/heapster_grafana:v2.6.0-2
         env:
           - name: INFLUXDB_SERVICE_URL
             value: http://monitoring-influxdb.kube-system.svc.cluster.local:8086
