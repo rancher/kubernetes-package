@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e -x
 
+# see https://github.com/rancher/rancher/issues/8038
+rm -f /var/run/nscd/socket
+
 while ! curl -s -f http://rancher-metadata/2015-12-19/stacks/Kubernetes/services/kubernetes/uuid; do
     echo Waiting for metadata
     sleep 1
