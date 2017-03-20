@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e -x
 
+if [ "$1" == "kubelet" ]; then
+    if [ -d /var/run/nscd ]; then
+        mount --bind $(mktemp -d) /var/run/nscd
+    fi
+fi
+
 while ! curl -s -f http://rancher-metadata/2015-12-19/stacks/Kubernetes/services/kubernetes/uuid; do
     echo Waiting for metadata
     sleep 1
@@ -50,9 +56,6 @@ if [ "$1" == "kubelet" ]; then
     done
     mount --rbind /host/dev /dev
     FQDN=$(hostname --fqdn || hostname)
-    if [ -d /var/run/nscd ]; then
-        mount --bind $(mktemp -d) /var/run/nscd
-    fi
     exec "$@" --hostname-override ${FQDN}
 elif [ "$1" == "kube-apiserver" ]; then
     CONTAINERIP=$(curl -s http://rancher-metadata/2015-12-19/self/container/ips/0)
