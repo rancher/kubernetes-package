@@ -26,9 +26,10 @@ for t in kubernetes/cluster/addons/dns/*.yaml.sed; do
     echo ${t%.sed}
 done
 
-cp -r ../addon-templates/dashboard kubernetes/cluster/addons/
-cp -r ../addon-templates/helm kubernetes/cluster/addons/
-cp -r ../addon-templates/heapster kubernetes/cluster/addons/
+cp -r ../addon-templates/k8s/* kubernetes/cluster/addons/
+
+mkdir -p helm/addons
+cp -r ../addon-templates/helm/* helm/addons/
 
 docker build -t ${REPO}/k8s:${TAG} .
 
