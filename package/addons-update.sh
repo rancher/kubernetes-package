@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e -x
 
+if [ ${DISABLE_ADDONS} == "true" ]; then
+    echo "addons have been disabled"
+    sleep infinity
+fi
+
 while ! kubectl --kubeconfig=/etc/kubernetes/ssl/kubeconfig --namespace=kube-system get ns kube-system >/dev/null 2>&1; do
 #  echo "Waiting for kubernetes API to come up..."
   sleep 2
