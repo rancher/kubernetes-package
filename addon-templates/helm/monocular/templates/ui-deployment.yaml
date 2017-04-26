@@ -12,6 +12,25 @@ spec:
         app: {{ template "fullname" . }}-ui
       annotations:
         checksum/config: {{ print .Values.api.config | sha256sum }}
+{{- if eq .Values.ui.affinity "enforcing" }}
+        scheduler.alpha.kubernetes.io/affinity: >
+          {
+            "podAntiAffinity": {
+              "requiredDuringSchedulingIgnoredDuringExecution": [{
+                "labelSelector": {
+                  "matchExpressions": [
+                    {
+                      "key": "app",
+                      "operator": "In",
+                      "values": ["{{ template "fullname" . }}-ui"]
+                    }
+                  ]
+                },
+                "topologyKey": "kubernetes.io/hostname"
+              }]
+            }
+          }
+{{- end }}
     spec:
       containers:
       - name: {{ .Chart.Name }}

@@ -10,6 +10,26 @@ spec:
     metadata:
       labels:
         app: {{ template "fullname" . }}-prerender
+{{- if eq .Values.prerender.affinity "enforcing" }}
+      annotations:
+        scheduler.alpha.kubernetes.io/affinity: >
+          {
+            "podAntiAffinity": {
+              "requiredDuringSchedulingIgnoredDuringExecution": [{
+                "labelSelector": {
+                  "matchExpressions": [
+                    {
+                      "key": "app",
+                      "operator": "In",
+                      "values": ["{{ template "fullname" . }}-prerender"]
+                    }
+                  ]
+                },
+                "topologyKey": "kubernetes.io/hostname"
+              }]
+            }
+          }
+{{- end }}
     spec:
       containers:
       - name: {{ .Chart.Name }}

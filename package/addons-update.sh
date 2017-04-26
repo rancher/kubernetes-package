@@ -37,8 +37,17 @@ while ! helm version >/dev/null 2>&1; do
   sleep 2
 done
 
-for f in $(ls /etc/kubernetes/helm-addons); do
-  helm install -n $f /etc/kubernetes/helm-addons/$f
+for d in $(ls -d -1 /etc/kubernetes/helm-addons/*); do
+  if [ -f $d/values.yaml ]; then
+    sed -i "s/\$GCR_IO_REGISTRY/$GCR_IO_REGISTRY/g" $d/values.yaml
+    sed -i "s/\$DOCKER_IO_REGISTRY/$DOCKER_IO_REGISTRY/g" $d/values.yaml
+  fi
+  name=$(basename $d)
+  if [ ! "$(helm ls $name | grep $name)" ]; then
+    helm install --namespace=kube-system -n $name $d
+  else
+    helm upgrade $name $d
+  fi
 done
 
 sleep infinity

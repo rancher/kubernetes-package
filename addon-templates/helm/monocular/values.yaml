@@ -2,9 +2,10 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 api:
+  affinity: enforcing
   replicaCount: 2
   image:
-    repository: gcr.io/helm-ui/monocular-api
+    repository: $GCR_IO_REGISTRY/helm-ui/monocular-api
     tag: latest
     pullPolicy: Always
   service:
@@ -38,9 +39,10 @@ api:
     cacheRefreshInterval: 3600
 
 ui:
+  affinity: enforcing
   replicaCount: 2
   image:
-    repository: gcr.io/helm-ui/monocular-ui
+    repository: $GCR_IO_REGISTRY/helm-ui/monocular-ui
     tag: latest
     pullPolicy: Always
   service:
@@ -56,13 +58,14 @@ ui:
       cpu: 100m
       memory: 128Mi
   # ui-config populate
-  googleAnalyticsId: UA-XXXXXX-X
+  googleAnalyticsId: UA-98100557-1
   appName: Monocular
 
 prerender:
+  affinity: permissive
   replicaCount: 1
   image:
-    repository: migmartri/prerender
+    repository: $DOCKER_IO_REGISTRY/migmartri/prerender
     tag: 0.1
     pullPolicy: IfNotPresent
   cacheEnabled: true
@@ -86,6 +89,7 @@ ingress:
   ##
   annotations:
     kubernetes.io/ingress.class: nginx
+    ingress.kubernetes.io/ssl-redirect: "false"
   #   kubernetes.io/tls-acme: 'true'
 
   ## Ingress TLS configuration
