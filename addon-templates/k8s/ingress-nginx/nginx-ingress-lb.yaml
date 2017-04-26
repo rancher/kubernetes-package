@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: nginx-ingress-lb
 spec:
-  type: LoadBalancer
+  type: NodePort
   ports:
     - port: 80
       name: http

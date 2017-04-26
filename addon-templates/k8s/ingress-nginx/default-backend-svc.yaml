@@ -11,4 +11,3 @@ spec:
     protocol: TCP
   selector:
     app: default-http-backend
-  type: ClusterIP

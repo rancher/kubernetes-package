@@ -42,7 +42,7 @@ spec:
           httpGet:
             path: /healthz
             port: {{ .Values.api.service.internalPort }}
-          initialDelaySeconds: 60
+          initialDelaySeconds: 120
           timeoutSeconds: 10
         readinessProbe:
           httpGet:
