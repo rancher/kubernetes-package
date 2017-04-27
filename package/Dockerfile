@@ -41,6 +41,6 @@ RUN wget -O /usr/bin/update-rancher-ssl https://raw.githubusercontent.com/ranche
 
 COPY runc-1.10 entry.sh addons-update.sh kubectl kubelet kube-proxy kube-apiserver kube-controller-manager kube-scheduler /usr/bin/
 COPY kubernetes/cluster/addons /etc/kubernetes/addons/
-COPY kubernetes/cluster/helm-addons /etc/kubernetes/helm-addons/
+COPY helm/addons /etc/kubernetes/helm-addons/
 
 ENTRYPOINT ["/usr/bin/entry.sh"]

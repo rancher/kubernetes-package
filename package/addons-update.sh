@@ -29,10 +29,10 @@ INFLUXDB_HOST_PATH=${INFLUXDB_HOST_PATH:-}
 INFLUXDB_RETENTION=${INFLUXDB_RETENTION:-7d}
 
 for f in $(find /etc/kubernetes/addons -name '*.yaml'); do
-  sed -i "s/\$GCR_IO_REGISTRY/$GCR_IO_REGISTRY/g" ${f}
-  sed -i "s/\$DOCKER_IO_REGISTRY/$DOCKER_IO_REGISTRY/g" ${f}
-  sed -i "s/\$INFLUXDB_HOST_PATH/$INFLUXDB_HOST_PATH/g" ${f}
-  sed -i "s/\$INFLUXDB_RETENTION/$INFLUXDB_RETENTION/g" ${f}
+  sed -i "s|\$GCR_IO_REGISTRY|$GCR_IO_REGISTRY|g" ${f}
+  sed -i "s|\$DOCKER_IO_REGISTRY|$DOCKER_IO_REGISTRY|g" ${f}
+  sed -i "s|\$INFLUXDB_HOST_PATH|$INFLUXDB_HOST_PATH|g" ${f}
+  sed -i "s|\$INFLUXDB_RETENTION|$INFLUXDB_RETENTION|g" ${f}
   kubectl --namespace=kube-system replace --force -f ${f}
 done
 
@@ -42,11 +42,12 @@ while ! helm version >/dev/null 2>&1; do
 done
 
 for d in $(ls -d -1 /etc/kubernetes/helm-addons/*); do
+  # only do token replacement on the values.yaml file
   if [ -f $d/values.yaml ]; then
-    sed -i "s/\$GCR_IO_REGISTRY/$GCR_IO_REGISTRY/g" $d/values.yaml
-    sed -i "s/\$DOCKER_IO_REGISTRY/$DOCKER_IO_REGISTRY/g" $d/values.yaml
-    sed -i "s/\$INFLUXDB_HOST_PATH/$INFLUXDB_HOST_PATH/g" $d/values.yaml
-    sed -i "s/\$INFLUXDB_RETENTION/$INFLUXDB_RETENTION/g" $d/values.yaml
+    sed -i "s|\$GCR_IO_REGISTRY|$GCR_IO_REGISTRY|g" $d/values.yaml
+    sed -i "s|\$DOCKER_IO_REGISTRY|$DOCKER_IO_REGISTRY|g" $d/values.yaml
+    sed -i "s|\$INFLUXDB_HOST_PATH|$INFLUXDB_HOST_PATH|g" $d/values.yaml
+    sed -i "s|\$INFLUXDB_RETENTION|$INFLUXDB_RETENTION|g" $d/values.yaml
   fi
   name=$(basename $d)
   if [ ! "$(helm ls $name | grep $name)" ]; then
