@@ -23,7 +23,7 @@ spec:
         serviceAccountName: "io-rancher-system"
         containers:
         - name: heapster
-          image: $GCR_IO_REGISTRY/google_containers/heapster:v1.2.0
+          image: {{ .Values.heapster.image }}
           imagePullPolicy: Always
           command:
           - /heapster

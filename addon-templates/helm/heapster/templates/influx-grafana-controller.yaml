@@ -18,12 +18,12 @@ spec:
       serviceAccountName: "io-rancher-system"
       containers:
       - name: influxdb
-        image: $DOCKER_IO_REGISTRY/kubernetes/heapster_influxdb:v0.5
+        image: {{ .Values.influxdb.image }}
         volumeMounts:
         - mountPath: /data
           name: influxdb-storage
       - name: grafana
-        image: $GCR_IO_REGISTRY/google_containers/heapster_grafana:v2.6.0-2
+        image: {{ .Values.grafana.image }}
         env:
           - name: INFLUXDB_SERVICE_URL
             value: http://monitoring-influxdb.kube-system.svc.cluster.local:8086
@@ -44,6 +44,13 @@ spec:
           name: grafana-storage
       volumes:
       - name: influxdb-storage
+      {{- if eq .Values.influxdb.hostPath "" }}
         emptyDir: {}
+      {{- else }}
+        hostPath:
+          path: {{ .Values.influxdb.hostPath | quote }}
+      {{- end }}
+      # Some other volume types to consider
+      # https://kubernetes.io/docs/concepts/storage/volumes/#types-of-volumes
       - name: grafana-storage
         emptyDir: {}

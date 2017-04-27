@@ -25,6 +25,7 @@ kubectl create -f /tmp/rancher-service-account.yaml || true
 
 GCR_IO_REGISTRY=${REGISTRY:-gcr.io}
 DOCKER_IO_REGISTRY=${REGISTRY:-docker.io}
+INFLUXDB_HOST_PATH=${INFLUXDB_HOST_PATH:-}
 
 for f in $(find /etc/kubernetes/addons -name '*.yaml'); do
   sed -i "s/\$GCR_IO_REGISTRY/$GCR_IO_REGISTRY/g" ${f}
@@ -41,6 +42,7 @@ for d in $(ls -d -1 /etc/kubernetes/helm-addons/*); do
   if [ -f $d/values.yaml ]; then
     sed -i "s/\$GCR_IO_REGISTRY/$GCR_IO_REGISTRY/g" $d/values.yaml
     sed -i "s/\$DOCKER_IO_REGISTRY/$DOCKER_IO_REGISTRY/g" $d/values.yaml
+    sed -i "s/\$INFLUXDB_HOST_PATH/$INFLUXDB_HOST_PATH/g" $d/values.yaml
   fi
   name=$(basename $d)
   if [ ! "$(helm ls $name | grep $name)" ]; then

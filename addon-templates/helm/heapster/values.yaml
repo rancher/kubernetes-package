@@ -1,0 +1,9 @@
+heapster:
+  image: $GCR_IO_REGISTRY/google_containers/heapster:v1.2.0
+
+influxdb:
+  image: $DOCKER_IO_REGISTRY/kubernetes/heapster_influxdb:v0.5
+  hostPath: '$INFLUXDB_HOST_PATH'
+
+grafana:
+  image: $GCR_IO_REGISTRY/google_containers/heapster_grafana:v2.6.0-2
