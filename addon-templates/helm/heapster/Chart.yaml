@@ -1,4 +1,0 @@
-apiVersion: v1
-description: Compute Resource Usage Analysis and Monitoring of Container Clusters
-name: heapster
-version: 0.1.0
