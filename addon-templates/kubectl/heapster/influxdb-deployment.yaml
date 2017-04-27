@@ -20,4 +20,4 @@ spec:
       serviceAccountName: io-rancher-system
       volumes:
       - name: influxdb-storage
-        emptyDir: {}
+        $INFLUXDB_VOLUME
