@@ -13,6 +13,9 @@ while ! kubectl --namespace=kube-system get ns kube-system >/dev/null 2>&1; do
   sleep 2
 done
 
+# Remove old influx
+kubectl delete --namespace kube-system deployment influxdb-grafana 2>/dev/null || true
+
 cat > /tmp/rancher-service-account.yaml << EOF
 apiVersion: v1
 kind: ServiceAccount
@@ -42,5 +45,8 @@ for f in $(find /etc/kubernetes/addons -name '*.yaml'); do
   sed -i "s|\$INFLUXDB_RETENTION|$INFLUXDB_RETENTION|g" ${f}
   kubectl --namespace=kube-system replace --force -f ${f}
 done
+
+# Remove orphaned heapster
+kubectl -n kube-system delete -l 'k8s-app=heapster' -l 'version=v6' replicaset 2>/dev/null || true
 
 sleep infinity
