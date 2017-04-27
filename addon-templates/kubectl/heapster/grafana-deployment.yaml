@@ -24,7 +24,7 @@ spec:
         - name: INFLUXDB_HOST
           value: monitoring-influxdb
         - name: INFLUXDB_SERVICE_URL
-          value: http://monitoring-influxdb.kube-system.svc.cluster.local:8086
+          value: http://monitoring-influxdb:8086
         - name: GRAFANA_PORT
           value: "3000"
           # The following env variables are required to make Grafana accessible via
