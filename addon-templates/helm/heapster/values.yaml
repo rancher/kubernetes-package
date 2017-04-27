@@ -1,11 +1,10 @@
-retention: 7d
-
 grafana:
-  image: gcr.io/google_containers/heapster-grafana-amd64:v4.0.2
+  image: $GCR_IO_REGISTRY/google_containers/heapster-grafana-amd64:v4.0.2
 
 heapster:
-  image: gcr.io/google_containers/heapster-amd64:v1.3.0-beta.1
+  image: $GCR_IO_REGISTRY/google_containers/heapster-amd64:v1.3.0-beta.1
 
 influxdb:
-  image: gcr.io/google_containers/heapster-influxdb-amd64:v1.1.1
-  hostPath: ''
+  image: $GCR_IO_REGISTRY/google_containers/heapster-influxdb-amd64:v1.1.1
+  hostPath: '$INFLUXDB_HOST_PATH'
+  retention: 'INFLUXDB_RETENTION'

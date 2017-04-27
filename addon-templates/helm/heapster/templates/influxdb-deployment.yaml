@@ -20,4 +20,9 @@ spec:
       serviceAccountName: io-rancher-system
       volumes:
       - name: influxdb-storage
+      {{- if eq .Values.influxdb.hostPath "" }}
         emptyDir: {}
+      {{- else }}
+        hostPath:
+          path: {{ .Values.influxdb.hostPath | quote }}
+      {{- end }}
