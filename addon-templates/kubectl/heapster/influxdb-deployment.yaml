@@ -13,16 +13,11 @@ spec:
     spec:
       containers:
       - name: influxdb
-        image: {{ .Values.influxdb.image }}
+        image: $GCR_IO_REGISTRY/google_containers/heapster-influxdb-amd64:v1.1.1
         volumeMounts:
         - mountPath: /data
           name: influxdb-storage
       serviceAccountName: io-rancher-system
       volumes:
       - name: influxdb-storage
-      {{- if eq .Values.influxdb.hostPath "" }}
         emptyDir: {}
-      {{- else }}
-        hostPath:
-          path: {{ .Values.influxdb.hostPath | quote }}
-      {{- end }}

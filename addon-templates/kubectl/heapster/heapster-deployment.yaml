@@ -13,9 +13,9 @@ spec:
     spec:
       containers:
       - name: heapster
-        image: {{ .Values.heapster.image }}
+        image: $GCR_IO_REGISTRY/google_containers/heapster-amd64:v1.3.0-beta.1
         command:
         - /heapster
         - --source=kubernetes:https://10.43.0.1:443?inClusterConfig=true&useServiceAccount=true
-        - --sink=influxdb:http://monitoring-influxdb.kube-system.svc.cluster.local:8086?retention={{ .Values.influxdb.retention }}
+        - --sink=influxdb:http://monitoring-influxdb.kube-system.svc.cluster.local:8086?retention=$INFLUXDB_RETENTION
       serviceAccountName: io-rancher-system
