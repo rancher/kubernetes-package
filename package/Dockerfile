@@ -27,7 +27,8 @@ RUN curl -sLf https://get.docker.com/builds/Linux/x86_64/docker-1.12.3.tgz | tar
     && curl -sLf https://get.docker.com/builds/Linux/x86_64/docker-1.11.2.tgz | tar xvzf - -C /usr/bin --strip-components=1 docker/docker-runc \
     && mv /usr/bin/docker-runc /usr/bin/runc-1.11 \
     && mkdir -p /mnt/sda1 \
-    && ln -s /var /mnt/sda1/var
+    && ln -s /var /mnt/sda1/var \
+    && curl -sLf https://storage.googleapis.com/kubernetes-helm/helm-v2.1.3-linux-amd64.tar.gz | tar xvzf - -C /usr/bin --strip-components=1 linux-amd64/helm
 
 ENV CNI v0.3.0-rancher3
 RUN mkdir -p /opt/loopback/bin \
@@ -39,10 +40,6 @@ RUN wget -O /usr/bin/update-rancher-ssl https://raw.githubusercontent.com/ranche
     chmod +x /usr/bin/update-rancher-ssl
 
 COPY runc-1.10 entry.sh addons-update.sh kubectl kubelet kube-proxy kube-apiserver kube-controller-manager kube-scheduler /usr/bin/
-RUN mkdir -p /etc/kubernetes/addons
-COPY kubernetes/cluster/addons/dns /etc/kubernetes/addons/
-COPY kubernetes/cluster/addons/dashboard /etc/kubernetes/addons/
-COPY kubernetes/cluster/addons/helm /etc/kubernetes/addons/
-COPY kubernetes/cluster/addons/heapster /etc/kubernetes/addons/
+COPY kubernetes/cluster/addons /etc/kubernetes/addons/
 
 ENTRYPOINT ["/usr/bin/entry.sh"]

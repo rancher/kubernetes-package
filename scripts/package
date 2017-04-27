@@ -25,10 +25,7 @@ for t in kubernetes/cluster/addons/dns/*.yaml.sed; do
     sed -f dns.sed <${t} >${t%.sed} && rm ${t}
     echo ${t%.sed}
 done
-
-cp -r ../addon-templates/dashboard kubernetes/cluster/addons/
-cp -r ../addon-templates/helm kubernetes/cluster/addons/
-cp -r ../addon-templates/heapster kubernetes/cluster/addons/
+cp -r ../addon-templates/kubectl/* kubernetes/cluster/addons/
 
 docker build -t ${REPO}/k8s:${TAG} .
 
