@@ -16,15 +16,28 @@ done
 # Remove old influx
 kubectl delete --namespace kube-system deployment influxdb-grafana 2>/dev/null || true
 
-cat > /tmp/rancher-service-account.yaml << EOF
+cat <<EOF | kubectl apply -f - || true
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-      name: "io-rancher-system"
-      namespace: "kube-system"
-EOF
+  name: "io-rancher-system"
+  namespace: "kube-system"
 
-kubectl create -f /tmp/rancher-service-account.yaml || true 
+---
+
+apiVersion: rbac.authorization.k8s.io/v1alpha1
+kind: ClusterRoleBinding
+metadata:
+  name: addons-binding
+subjects:
+- kind: ServiceAccount
+  name: io-rancher-system
+  namespace: kube-system
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+EOF
 
 GCR_IO_REGISTRY=${REGISTRY:-gcr.io}
 DOCKER_IO_REGISTRY=${REGISTRY:-docker.io}
