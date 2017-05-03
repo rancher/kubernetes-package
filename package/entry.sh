@@ -27,8 +27,7 @@ if [ -n "$ACTION" ]; then
 
     TOKEN=$(cat /etc/kubernetes/ssl/key.pem | sha256sum | awk '{print $1}')
 
-    if [ "${RBAC}" == "true" ]; then
-        cat > /etc/kubernetes/ssl/kubeconfig << EOF
+    cat > /etc/kubernetes/ssl/kubeconfig << EOF
 apiVersion: v1
 kind: Config
 clusters:
@@ -48,29 +47,6 @@ users:
   user:
     token: "$TOKEN"
 EOF
-    else
-        cat > /etc/kubernetes/ssl/kubeconfig << EOF
-apiVersion: v1
-kind: Config
-clusters:
-- cluster:
-    api-version: v1
-    certificate-authority: /etc/kubernetes/ssl/ca.pem
-    server: "$KUBERNETES_URL"
-  name: "Default"
-contexts:
-- context:
-    cluster: "Default"
-    user: "Default"
-  name: "Default"
-current-context: "Default"
-users:
-- name: "Default"
-  user:
-    client-certificate: /etc/kubernetes/ssl/cert.pem
-    client-key: /etc/kubernetes/ssl/key.pem
-EOF
-    fi
 fi
 
 cat > /etc/kubernetes/authconfig << EOF
