@@ -67,7 +67,7 @@ contexts:
 EOF
 
 if [ "$1" == "kubelet" ]; then
-    for i in $(DOCKER_API_VERSION=1.22 ./docker info 2>&1  | grep -i 'docker root dir' | cut -f2 -d:) /var/lib/docker /run /var/run; do
+    for i in /run /var/run; do
         for m in $(tac /proc/mounts | awk '{print $2}' | grep ^${i}/); do
             if [ "$m" != "/var/run/nscd" ] && [ "$m" != "/run/nscd" ]; then
                 umount $m || true
@@ -75,6 +75,7 @@ if [ "$1" == "kubelet" ]; then
         done
     done
     mount --rbind /host/dev /dev
+    mount --make-rshared /var/lib/docker
     FQDN=$(hostname --fqdn || hostname)
     exec "$@" --hostname-override ${FQDN}
 elif [ "$1" == "kube-apiserver" ]; then
