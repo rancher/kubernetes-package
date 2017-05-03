@@ -25,7 +25,31 @@ if [ -n "$ACTION" ]; then
     unzip -o certs.zip
     cd $OLDPWD
 
-    cat > /etc/kubernetes/ssl/kubeconfig << EOF
+    TOKEN=$(cat /etc/kubernetes/ssl/key.pem | sha256sum | awk '{print $1}')
+
+    if [ "${RBAC}" == "true" ]; then
+        cat > /etc/kubernetes/ssl/kubeconfig << EOF
+apiVersion: v1
+kind: Config
+clusters:
+- cluster:
+    api-version: v1
+    insecure-skip-tls-verify: true
+    server: "$KUBERNETES_URL"
+  name: "Default"
+contexts:
+- context:
+    cluster: "Default"
+    user: "Default"
+  name: "Default"
+current-context: "Default"
+users:
+- name: "Default"
+  user:
+    token: "$TOKEN"
+EOF
+    else
+        cat > /etc/kubernetes/ssl/kubeconfig << EOF
 apiVersion: v1
 kind: Config
 clusters:
@@ -46,7 +70,25 @@ users:
     client-certificate: /etc/kubernetes/ssl/cert.pem
     client-key: /etc/kubernetes/ssl/key.pem
 EOF
+    fi
 fi
+
+cat > /etc/kubernetes/authconfig << EOF
+clusters:
+- name: rancher-kubernetes-auth
+  cluster:
+    server: http://rancher-kubernetes-auth
+
+users:
+- name: rancher-kubernetes
+
+current-context: webhook
+contexts:
+- context:
+    cluster: rancher-kubernetes-auth
+    user: rancher-kubernetes
+  name: webhook
+EOF
 
 if [ "$1" == "kubelet" ]; then
     for i in $(DOCKER_API_VERSION=1.22 ./docker info 2>&1  | grep -i 'docker root dir' | cut -f2 -d:) /var/lib/docker /run /var/run; do

@@ -21,7 +21,7 @@ spec:
       serviceAccountName: "io-rancher-system"
       containers:
       - name: kubernetes-dashboard
-        image: $GCR_IO_REGISTRY/google_containers/kubernetes-dashboard-amd64:v1.5.0
+        image: $DOCKER_IO_REGISTRY/rancher/kubernetes-dashboard:v0.0.1
         resources:
           # keep request = limit to keep this container in guaranteed class
           limits:
