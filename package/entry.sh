@@ -75,6 +75,12 @@ if [ "$1" == "kubelet" ]; then
         done
     done
     mount --rbind /host/dev /dev
+    mount -o rw,remount /sys/fs/cgroup 2>/dev/null || true
+    for i in /sys/fs/cgroup/*; do
+        if [ -d $i ]; then
+             mkdir -p $i/kubepods
+        fi
+    done
     FQDN=$(hostname --fqdn || hostname)
     exec "$@" --hostname-override ${FQDN}
 elif [ "$1" == "kube-apiserver" ]; then
