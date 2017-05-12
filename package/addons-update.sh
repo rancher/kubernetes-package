@@ -59,6 +59,23 @@ for f in $(find /etc/kubernetes/addons -name '*.yaml'); do
   kubectl --namespace=kube-system replace --force -f ${f}
 done
 
+while ! helm version >/dev/null 2>&1; do
+  # echo "Waiting fro Helm API to become reachable..."
+  sleep 2
+done
+
+for d in $(ls -d -1 /etc/kubernetes/helm-addons/*); do
+  if [ -f $d/values.yaml ]; then
+    sed -i "s/\$GCR_IO_REGISTRY/$GCR_IO_REGISTRY/g" $d/values.yaml
+    sed -i "s/\$DOCKER_IO_REGISTRY/$DOCKER_IO_REGISTRY/g" $d/values.yaml
+    sed -i "s/\$INFLUXDB_HOST_PATH/$INFLUXDB_HOST_PATH/g" $d/values.yaml
+  fi
+  name=$(basename $d)
+  if [ ! "$(helm ls $name | grep $name)" ]; then
+    helm install --namespace=kube-system -n $name $d
+  fi
+done
+
 # Remove orphaned heapster
 kubectl -n kube-system delete -l 'k8s-app=heapster' -l 'version=v6' replicaset 2>/dev/null || true
 
