@@ -34,9 +34,13 @@ spec:
         volumeMounts:
           - name: config
             mountPath: /root/monocular/config
+          - name: repo-data
+            mountPath: /root/monocular/repo-data
         resources:
 {{ toYaml .Values.api.resources | indent 12 }}
       volumes:
       - name: config
         configMap:
           name: {{ template "fullname" . }}-api-config
+      - name: repo-data
+        emptyDir: {}
