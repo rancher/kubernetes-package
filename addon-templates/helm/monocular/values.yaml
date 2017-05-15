@@ -33,7 +33,7 @@ api:
       #  url: my-repository-url
       #  source: my-repository-source
     # Enable Helm deployment integration
-    releasesEnabled: false
+    releasesEnabled: true
     # Cache refresh interval in sec.
     cacheRefreshInterval: 3600
 
