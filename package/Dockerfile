@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM rancher/agent-base:v0.3.0
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update -y \
     && DEBIAN_FRONTEND=noninteractive apt-get -yy -q \
