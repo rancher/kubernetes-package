@@ -28,6 +28,7 @@ for t in kubernetes/cluster/addons/dns/*.yaml.sed; do
 done
 cp -r ../addon-templates/kubectl/* kubernetes/cluster/addons/
 
-docker build -t ${REPO}/k8s:${TAG} .
-
-echo Built ${REPO}/k8s:${TAG}
+IMAGE=${REPO}/k8s:${TAG}
+docker build -t ${IMAGE} .
+echo ${IMAGE} > ../dist/images
+echo Built ${IMAGE}
