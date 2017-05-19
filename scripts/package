@@ -20,12 +20,20 @@ tar xvzf $DOWNLOAD/k8s.tar.gz --strip-components=3 kubernetes/server/bin/{kubele
 tar xvzf $DOWNLOAD/k8s.tar.gz kubernetes/kubernetes-src.tar.gz
 tar xvzf kubernetes/kubernetes-src.tar.gz -C kubernetes --wildcards \
                                 ./cluster/addons/dns/*.yaml \
-                                ./cluster/addons/dns/*.yaml.sed
+                                ./cluster/addons/dns/*.yaml.sed \
+                                ./cluster/addons/dns-horizontal-autoscaler/*.yaml
 
 for t in kubernetes/cluster/addons/dns/*.yaml.sed; do
     sed -f dns.sed <${t} >${t%.sed} && rm ${t}
     echo ${t%.sed}
 done
+
+for t in kubernetes/cluster/addons/dns-horizontal-autoscaler/*.yaml; do
+    mv ${t} ${t}.sed
+    sed -f dns-autoscaler.sed <${t}.sed >${t} && rm ${t}.sed
+    echo ${t}
+done
+
 cp -r ../addon-templates/kubectl/* kubernetes/cluster/addons/
 
 IMAGE=${REPO}/k8s:${TAG}
