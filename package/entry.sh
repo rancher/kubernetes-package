@@ -33,7 +33,7 @@ kind: Config
 clusters:
 - cluster:
     api-version: v1
-    insecure-skip-tls-verify: true
+    certificate-authority: /etc/kubernetes/ssl/ca.pem
     server: "$KUBERNETES_URL"
   name: "Default"
 contexts:
