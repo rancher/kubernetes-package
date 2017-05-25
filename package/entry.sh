@@ -67,6 +67,12 @@ contexts:
 EOF
 
 if [ "$1" == "kubelet" ]; then
+    FQDN=$(hostname --fqdn || hostname)
+
+    if [ "${KUBELET_HOST_NAMESPACE}" == "true" ]; then
+        nsenter -m -u -i -n -p -t 1 && "$@" --hostname-override ${FQDN}
+    fi
+
     for i in $(DOCKER_API_VERSION=1.22 ./docker info 2>&1  | grep -i 'docker root dir' | cut -f2 -d:) /var/lib/docker /run /var/run; do
         for m in $(tac /proc/mounts | awk '{print $2}' | grep ^${i}/); do
             if [ "$m" != "/var/run/nscd" ] && [ "$m" != "/run/nscd" ]; then
@@ -81,7 +87,7 @@ if [ "$1" == "kubelet" ]; then
              mkdir -p $i/kubepods
         fi
     done
-    FQDN=$(hostname --fqdn || hostname)
+
     exec "$@" --hostname-override ${FQDN}
 elif [ "$1" == "kube-apiserver" ]; then
     CONTAINERIP=$(curl -s http://rancher-metadata/2015-12-19/self/container/ips/0)
