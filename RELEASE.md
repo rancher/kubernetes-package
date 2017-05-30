@@ -56,3 +56,5 @@ git push origin v1.5.2-rancher
 ### K8s template in rancher catalog
 
 https://github.com/rancher/rancher-catalog/tree/master/infra-templates/k8s
+
+Review recommended admission controllers and see if they have changed since the last release (https://github.com/kubernetes/kubernetes.github.io/blob/master/docs/admin/admission-controllers.md#is-there-a-recommended-set-of-plug-ins-to-use).
