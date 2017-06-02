@@ -33,7 +33,7 @@ kind: Config
 clusters:
 - cluster:
     api-version: v1
-    certificate-authority: /etc/kubernetes/ssl/ca.pem
+    insecure-skip-tls-verify: true
     server: "$KUBERNETES_URL"
   name: "Default"
 contexts:
@@ -84,8 +84,12 @@ if [ "$1" == "kubelet" ]; then
     FQDN=$(hostname --fqdn || hostname)
     exec "$@" --hostname-override ${FQDN}
 elif [ "$1" == "kube-apiserver" ]; then
-    CONTAINERIP=$(curl -s http://rancher-metadata/2015-12-19/self/container/ips/0)
-    exec "$@" "--advertise-address=$CONTAINERIP"
+    while ! curl -s -f http://rancher-metadata/latest/stacks/Kubernetes/services/kubernetes/containers/0/primary_ip; do
+        echo Waiting for API server load balancer
+        sleep 1
+    done
+    LB_IP=$(curl -s http://rancher-metadata/latest/stacks/Kubernetes/services/kubernetes/containers/0/primary_ip)
+    exec "$@" "--advertise-address=$LB_IP"
 else
     exec "$@"
 fi
