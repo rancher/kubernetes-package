@@ -42,4 +42,8 @@ RUN wget -O /usr/bin/update-rancher-ssl https://raw.githubusercontent.com/ranche
 COPY runc-1.10 entry.sh addons-update.sh kubectl kubelet kube-proxy kube-apiserver kube-controller-manager kube-scheduler /usr/bin/
 COPY kubernetes/cluster/addons /etc/kubernetes/addons/
 
+RUN curl -OL https://github.com/rancher/cli/releases/download/v0.6.1/rancher-linux-amd64-v0.6.1.tar.gz \
+    && tar xf rancher-linux-amd64-v0.6.1.tar.gz \
+    && mv rancher-v0.6.1/rancher /usr/bin/
+
 ENTRYPOINT ["/usr/bin/entry.sh"]

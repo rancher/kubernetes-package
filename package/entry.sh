@@ -89,6 +89,15 @@ if [ "$1" == "kubelet" || "$1" == "kube-proxy" ]; then
 fi
 
 if [ "$1" == "kube-apiserver" ]; then
+    export RANCHER_URL=${CATTLE_URL}
+    export RANCHER_ACCESS_KEY=${CATTLE_ACCESS_KEY}
+    export RANCHER_SECRET_KEY=${CATTLE_SECRET_KEY}
+
+    LABEL=$(rancher inspect rancher-kubernetes-agent | jq '.launchConfig.labels."io.rancher.k8s.agent"')
+    if [ "${LABEL}" = "null" ]; then
+        rancher rm rancher-kubernetes-agent
+    fi
+
     CONTAINERIP=$(curl -s http://rancher-metadata/2015-12-19/self/container/ips/0)
     exec "$@" "--advertise-address=$CONTAINERIP"
 fi
