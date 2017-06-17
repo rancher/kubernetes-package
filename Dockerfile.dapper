@@ -5,7 +5,7 @@ RUN apt-get update && \
     apt-get install -y ca-certificates wget git && \
     rm -f /bin/sh && ln -s /bin/bash /bin/sh
 
-ENV K8S_DOWNLOAD https://github.com/rancher/kubernetes/releases/download/v1.6.4-rancher1/kubernetes-server-linux-amd64.tar.gz
+ENV K8S_DOWNLOAD https://github.com/rancher/kubernetes/releases/download/v1.6.6-rancher1/kubernetes-server-linux-amd64.tar.gz
 ENV DOWNLOAD /usr/src
 
 ARG DAPPER_HOST_ARCH
