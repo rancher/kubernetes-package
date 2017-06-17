@@ -81,11 +81,16 @@ if [ "$1" == "kubelet" ]; then
              mkdir -p $i/kubepods
         fi
     done
+fi
+
+if [ "$1" == "kubelet" || "$1" == "kube-proxy" ]; then
     FQDN=$(hostname --fqdn || hostname)
     exec "$@" --hostname-override ${FQDN}
-elif [ "$1" == "kube-apiserver" ]; then
+fi
+
+if [ "$1" == "kube-apiserver" ]; then
     CONTAINERIP=$(curl -s http://rancher-metadata/2015-12-19/self/container/ips/0)
     exec "$@" "--advertise-address=$CONTAINERIP"
-else
-    exec "$@"
 fi
+
+exec "$@"
