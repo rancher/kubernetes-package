@@ -83,7 +83,7 @@ if [ "$1" == "kubelet" ]; then
     done
 fi
 
-if [ "$1" == "kubelet" || "$1" == "kube-proxy" ]; then
+if [ "$1" == "kubelet" ] || [ "$1" == "kube-proxy" ]; then
     FQDN=$(hostname --fqdn || hostname)
     exec "$@" --hostname-override ${FQDN}
 fi
