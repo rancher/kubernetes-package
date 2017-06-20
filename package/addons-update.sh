@@ -42,6 +42,7 @@ EOF
 GCR_IO_REGISTRY=${REGISTRY:-gcr.io}
 DOCKER_IO_REGISTRY=${REGISTRY:-docker.io}
 INFLUXDB_RETENTION=${INFLUXDB_RETENTION:-0s}
+CONSTRAINT_TYPE=${CONSTRAINT_TYPE:-none}
 
 
 INFLUXDB_HOST_PATH=${INFLUXDB_HOST_PATH:-}
@@ -49,6 +50,14 @@ if [ "$INFLUXDB_HOST_PATH" == "" ]; then
   INFLUXDB_VOLUME="emptyDir: {}"
 else
   INFLUXDB_VOLUME="hostPath:\n          path: $INFLUXDB_HOST_PATH"
+fi
+
+if [ "$CONSTRAINT_TYPE" == "required" ]; then
+  for f in $(find /etc/kubernetes/addons -name 'kubedns-controller.yaml'); do
+    sed -i '/    spec:/a\
+      nodeSelector:\
+        orchestration: "true"' ${f}
+  done
 fi
 
 for f in $(find /etc/kubernetes/addons -name '*.yaml'); do
