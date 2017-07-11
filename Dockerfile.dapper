@@ -2,11 +2,8 @@ FROM ubuntu:16.04
 # FROM arm=armhf/ubuntu:16.04
 
 RUN apt-get update && \
-    apt-get install -y ca-certificates wget git && \
+    apt-get install -y ca-certificates wget git xz-utils && \
     rm -f /bin/sh && ln -s /bin/bash /bin/sh
-
-ENV K8S_DOWNLOAD https://github.com/rancher/kubernetes/releases/download/v1.7.0-rancher1/kubernetes-server-linux-amd64.tar.gz
-ENV DOWNLOAD /usr/src
 
 ARG DAPPER_HOST_ARCH
 ENV HOST_ARCH=${DAPPER_HOST_ARCH} ARCH=${DAPPER_HOST_ARCH}
@@ -16,7 +13,12 @@ ENV DOCKER_URL_amd64=https://get.docker.com/builds/Linux/x86_64/docker-1.10.3 \
     DOCKER_URL=DOCKER_URL_${ARCH}
 RUN wget -O - ${!DOCKER_URL} > /usr/bin/docker && chmod +x /usr/bin/docker
 
-RUN wget -O - $K8S_DOWNLOAD > $DOWNLOAD/k8s.tar.gz
+ENV DOWNLOAD /usr/src
+
+ENV KUBERNETES_DOWNLOAD https://dl.k8s.io/v1.7.0/kubernetes-server-linux-amd64.tar.gz
+RUN wget -O - $KUBERNETES_DOWNLOAD > $DOWNLOAD/k8s.tar.gz
+
+RUN wget https://github.com/rancher/rancher-cloud-controller-manager/releases/download/v0.1.0/rancher-cloud-controller-manager.tar.xz -P $DOWNLOAD
 
 ENV DAPPER_ENV REPO TAG
 ENV DAPPER_SOURCE /source
