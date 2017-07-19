@@ -18,15 +18,15 @@ fi
 
 tar xvzf $DOWNLOAD/k8s.tar.gz --strip-components=3 kubernetes/server/bin/{kubelet,kube-proxy,kube-apiserver,kube-controller-manager,kube-scheduler,kubectl}
 tar xvzf $DOWNLOAD/k8s.tar.gz kubernetes/kubernetes-src.tar.gz
-tar xvzf kubernetes/kubernetes-src.tar.gz -C kubernetes --wildcards \
-                                ./cluster/addons/dns/*.yaml \
-                                ./cluster/addons/dns/*.yaml.sed
+
+mkdir -p kubernetes/cluster/addons
+
+cp -r ../addon-templates/kubectl/* kubernetes/cluster/addons/
 
 for t in kubernetes/cluster/addons/dns/*.yaml.sed; do
     sed -f dns.sed <${t} >${t%.sed} && rm ${t}
     echo ${t%.sed}
 done
-cp -r ../addon-templates/kubectl/* kubernetes/cluster/addons/
 
 tar xvf $DOWNLOAD/rancher-cloud-controller-manager.tar.xz
 
