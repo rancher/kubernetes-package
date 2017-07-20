@@ -18,7 +18,7 @@ ENV DOWNLOAD /usr/src
 ENV KUBERNETES_DOWNLOAD https://dl.k8s.io/v1.7.1/kubernetes-server-linux-amd64.tar.gz
 RUN wget -O - $KUBERNETES_DOWNLOAD > $DOWNLOAD/k8s.tar.gz
 
-RUN wget https://github.com/rancher/rancher-cloud-controller-manager/releases/download/v0.1.0/rancher-cloud-controller-manager.tar.xz -P $DOWNLOAD
+RUN wget https://github.com/rancher/rancher-cloud-controller-manager/releases/download/v0.1.1/rancher-cloud-controller-manager.tar.xz -P $DOWNLOAD
 
 ENV DAPPER_ENV REPO TAG
 ENV DAPPER_SOURCE /source
