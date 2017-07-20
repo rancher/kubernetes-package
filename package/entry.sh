@@ -81,13 +81,16 @@ if [ "$1" == "kubelet" ]; then
              mkdir -p $i/kubepods
         fi
     done
-
-    CGROUPDRIVER=$(docker info | grep -i 'cgroup driver' | awk '{print $3}')
-    exec "$@" "--cgroup-driver=$CGROUPDRIVER"
 fi
 
-if [ "$1" == "kubelet" ] || [ "$1" == "kube-proxy" ]; then
-    FQDN=$(hostname --fqdn || hostname)
+FQDN=$(hostname --fqdn || hostname)
+
+if [ "$1" == "kubelet" ]; then
+    CGROUPDRIVER=$(docker info | grep -i 'cgroup driver' | awk '{print $3}')
+    exec "$@" --cgroup-driver=$CGROUPDRIVER --hostname-override ${FQDN}
+fi
+
+if [ "$1" == "kube-proxy" ]; then
     exec "$@" --hostname-override ${FQDN}
 fi
 
