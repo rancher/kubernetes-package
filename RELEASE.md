@@ -39,7 +39,7 @@ If kubernetes base got changed - either sync with upstream was performed, or som
 
 1) Point dockerfile.dapper to a new binary:
 
-https://github.com/rancher/kubernetes-package/blob/master/Dockerfile.dapper#L8
+https://github.com/rancher/kubernetes-package/blob/master/Dockerfile.dapper#L18
 
 2) Commit the changes, create and push tag
 3) Run make to generate a new image.
