@@ -17,6 +17,23 @@
 
 # Warning: This is a file generated from the base underscore template file: kubedns-controller.yaml.base
 
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kube-dns
+  namespace: kube-system
+  labels:
+    addonmanager.kubernetes.io/mode: EnsureExists
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kube-dns
+  namespace: kube-system
+  labels:
+    kubernetes.io/cluster-service: "true"
+    addonmanager.kubernetes.io/mode: Reconcile
+---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
