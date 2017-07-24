@@ -41,6 +41,7 @@ metadata:
   namespace: kube-system
   labels:
     k8s-app: kube-dns
+    rancher-app: kube-dns1
     kubernetes.io/cluster-service: "true"
     addonmanager.kubernetes.io/mode: Reconcile
 spec:
@@ -72,10 +73,10 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
               matchExpressions:
-              - key: k8s-app
+              - key: rancher-app
                 operator: In
                 values:
-                - kube-dns
+                - kube-dns1
             topologyKey: kubernetes.io/hostname
       containers:
       - name: kubedns
