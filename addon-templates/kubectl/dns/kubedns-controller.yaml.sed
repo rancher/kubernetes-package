@@ -97,9 +97,10 @@ spec:
             port: 10054
             scheme: HTTP
           initialDelaySeconds: 60
-          timeoutSeconds: 5
+          timeoutSeconds: 2
           successThreshold: 1
-          failureThreshold: 5
+          failureThreshold: 3
+          periodSeconds: 2
         readinessProbe:
           httpGet:
             path: /readiness
@@ -108,7 +109,10 @@ spec:
           # we poll on pod startup for the Kubernetes master service and
           # only setup the /readiness HTTP server once that's available.
           initialDelaySeconds: 3
-          timeoutSeconds: 5
+          timeoutSeconds: 2
+          successThreshold: 1
+          failureThreshold: 3
+          periodSeconds: 2
         args:
         - --domain=$DNS_DOMAIN.
         - --dns-port=10053
@@ -138,9 +142,10 @@ spec:
             port: 10054
             scheme: HTTP
           initialDelaySeconds: 60
-          timeoutSeconds: 5
+          timeoutSeconds: 2
           successThreshold: 1
-          failureThreshold: 5
+          failureThreshold: 3
+          periodSeconds: 2
         args:
         - -v=2
         - -logtostderr
@@ -176,9 +181,10 @@ spec:
             port: 10054
             scheme: HTTP
           initialDelaySeconds: 60
-          timeoutSeconds: 5
+          timeoutSeconds: 2
           successThreshold: 1
-          failureThreshold: 5
+          failureThreshold: 3
+          periodSeconds: 2
         args:
         - --v=2
         - --logtostderr
