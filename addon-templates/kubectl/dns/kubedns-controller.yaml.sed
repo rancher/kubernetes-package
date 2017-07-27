@@ -41,7 +41,6 @@ metadata:
   namespace: kube-system
   labels:
     k8s-app: kube-dns
-    rancher-app: kube-dns1
     kubernetes.io/cluster-service: "true"
     addonmanager.kubernetes.io/mode: Reconcile
 spec:
@@ -57,6 +56,7 @@ spec:
     metadata:
       labels:
         k8s-app: kube-dns
+        rancher-app: kube-dns1
       annotations:
         scheduler.alpha.kubernetes.io/critical-pod: ''
     spec:
