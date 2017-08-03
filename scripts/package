@@ -28,8 +28,6 @@ for t in kubernetes/cluster/addons/dns/*.yaml.sed; do
     echo ${t%.sed}
 done
 
-tar xvf $DOWNLOAD/rancher-cloud-controller-manager.tar.xz
-
 IMAGE=${REPO}/k8s:${TAG}
 docker build -t ${IMAGE} .
 echo ${IMAGE} > ../dist/images
