@@ -19,6 +19,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -y \
     ceph-fs-common \
     ceph-common \
     conntrack \
+    netcat-openbsd \
     && DEBIAN_FRONTEND=noninteractive apt-get autoremove -y \
     && DEBIAN_FRONTEND=noninteractive apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
