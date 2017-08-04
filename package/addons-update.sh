@@ -63,4 +63,4 @@ done
 # Remove orphaned heapster
 kubectl -n kube-system delete -l 'k8s-app=heapster' -l 'version=v6' replicaset 2>/dev/null || true
 
-sleep infinity
+nc -k -l 10240 > /dev/null 2>&1
