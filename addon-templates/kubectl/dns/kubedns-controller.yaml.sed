@@ -25,15 +25,6 @@ metadata:
   labels:
     addonmanager.kubernetes.io/mode: EnsureExists
 ---
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: kube-dns
-  namespace: kube-system
-  labels:
-    kubernetes.io/cluster-service: "true"
-    addonmanager.kubernetes.io/mode: Reconcile
----
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -56,7 +47,7 @@ spec:
     metadata:
       labels:
         k8s-app: kube-dns
-        rancher-app: kube-dns1
+        rancher-app: kube-dns2
       annotations:
         scheduler.alpha.kubernetes.io/critical-pod: ''
     spec:
@@ -76,7 +67,7 @@ spec:
               - key: rancher-app
                 operator: In
                 values:
-                - kube-dns1
+                - kube-dns2
             topologyKey: kubernetes.io/hostname
       containers:
       - name: kubedns
@@ -199,4 +190,4 @@ spec:
             memory: 20Mi
             cpu: 10m
       dnsPolicy: Default  # Don't use cluster DNS.
-      serviceAccountName: kube-dns
+      serviceAccountName: io-rancher-system
