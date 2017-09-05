@@ -43,6 +43,7 @@ GCR_IO_REGISTRY=${REGISTRY:-gcr.io}
 DOCKER_IO_REGISTRY=${REGISTRY:-docker.io}
 INFLUXDB_RETENTION=${INFLUXDB_RETENTION:-0s}
 DNS_REPLICAS=${DNS_REPLICAS:-1}
+DNS_CLUSTER_IP=${DNS_CLUSTER_IP:-10.43.0.10}
 
 INFLUXDB_HOST_PATH=${INFLUXDB_HOST_PATH:-}
 if [ "$INFLUXDB_HOST_PATH" == "" ]; then
@@ -57,6 +58,7 @@ for f in $(find /etc/kubernetes/addons -name '*.yaml'); do
   sed -i "s|\$INFLUXDB_VOLUME|$INFLUXDB_VOLUME|g" ${f}
   sed -i "s|\$INFLUXDB_RETENTION|$INFLUXDB_RETENTION|g" ${f}
   sed -i "s|\$DNS_REPLICAS|$DNS_REPLICAS|g" ${f}
+  sed -i "s|\$DNS_CLUSTER_IP|$DNS_CLUSTER_IP|g" ${f}
   kubectl --namespace=kube-system replace --force -f ${f}
 done
 
