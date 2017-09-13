@@ -16,7 +16,7 @@ done
 
 UUID=$(curl -s http://rancher-metadata/2015-12-19/stacks/Kubernetes/services/kubernetes/uuid)
 ACTION=$(curl -s -u $CATTLE_ACCESS_KEY:$CATTLE_SECRET_KEY "$CATTLE_URL/services?uuid=$UUID" | jq -r '.data[0].actions.certificate')
-KUBERNETES_URL=${KUBERNETES_URL:-https://kubernetes:6443}
+KUBERNETES_URL=${KUBERNETES_URL:-https://kubernetes.kubernetes.rancher.internal:6443}
 
 if [ -n "$ACTION" ]; then
     mkdir -p /etc/kubernetes/ssl
