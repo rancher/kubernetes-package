@@ -28,7 +28,7 @@ for t in kubernetes/cluster/addons/dns/*.yaml.sed; do
     echo ${t%.sed}
 done
 
-IMAGE=${REPO}/k8s:${TAG}
+IMAGE=${REPO}/netes:${TAG}
 docker build -t ${IMAGE} .
 echo ${IMAGE} > ../dist/images
 echo Built ${IMAGE}

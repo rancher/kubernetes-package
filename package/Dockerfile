@@ -47,4 +47,6 @@ RUN curl -OL https://github.com/rancher/cli/releases/download/v0.6.1/rancher-lin
     && tar xf rancher-linux-amd64-v0.6.1.tar.gz \
     && mv rancher-v0.6.1/rancher /usr/bin/
 
+# This is quite obviously insecure and will be removed
+COPY ssl /etc/kubernetes/ssl/
 ENTRYPOINT ["/usr/bin/entry.sh"]
