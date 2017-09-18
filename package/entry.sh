@@ -7,27 +7,12 @@ if [ "$1" == "kubelet" ]; then
     fi
 fi
 
-while ! curl -s -f http://rancher-metadata/2015-12-19/stacks/Kubernetes/services/kubernetes/uuid; do
-    echo Waiting for metadata
-    sleep 1
-done
-
 /usr/bin/update-rancher-ssl
 
-UUID=$(curl -s http://rancher-metadata/2015-12-19/stacks/Kubernetes/services/kubernetes/uuid)
-ACTION=$(curl -s -u $CATTLE_ACCESS_KEY:$CATTLE_SECRET_KEY "$CATTLE_URL/services?uuid=$UUID" | jq -r '.data[0].actions.certificate')
-KUBERNETES_URL=${KUBERNETES_URL:-https://kubernetes:6443}
+KUBERNETES_URL=http://169.254.169.250:81
 
-if [ -n "$ACTION" ]; then
-    mkdir -p /etc/kubernetes/ssl
-    cd /etc/kubernetes/ssl
-    curl -s -u $CATTLE_ACCESS_KEY:$CATTLE_SECRET_KEY -X POST $ACTION > certs.zip
-    unzip -o certs.zip
-    cd $OLDPWD
-
-    TOKEN=$(cat /etc/kubernetes/ssl/key.pem | sha256sum | awk '{print $1}')
-
-    cat > /etc/kubernetes/ssl/kubeconfig << EOF
+mkdir -p /etc/kubernetes/ssl
+cat > /etc/kubernetes/ssl/kubeconfig << EOF
 apiVersion: v1
 kind: Config
 clusters:
@@ -46,24 +31,6 @@ users:
 - name: "Default"
   user:
     token: "$TOKEN"
-EOF
-fi
-
-cat > /etc/kubernetes/authconfig << EOF
-clusters:
-- name: rancher-kubernetes-auth
-  cluster:
-    server: http://rancher-kubernetes-auth
-
-users:
-- name: rancher-kubernetes
-
-current-context: webhook
-contexts:
-- context:
-    cluster: rancher-kubernetes-auth
-    user: rancher-kubernetes
-  name: webhook
 EOF
 
 if [ "$1" == "kubelet" ]; then
