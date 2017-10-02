@@ -47,7 +47,7 @@ spec:
     metadata:
       labels:
         k8s-app: kube-dns
-        rancher-app: kube-dns3
+        rancher-app: kube-dns4
       annotations:
         scheduler.alpha.kubernetes.io/critical-pod: ''
     spec:
@@ -67,7 +67,7 @@ spec:
               - key: rancher-app
                 operator: In
                 values:
-                - kube-dns2
+                - kube-dns4
             topologyKey: kubernetes.io/hostname
       containers:
       - name: kubedns
