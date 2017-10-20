@@ -66,6 +66,14 @@ contexts:
   name: webhook
 EOF
 
+# generate Azure cloud provider config
+if echo ${@} | grep -q "cloud-provider=azure"; then
+  if [ "$1" == "kubelet" ] || [ "$1" == "kube-apiserver" ] || [ "$1" == "kube-controller-manager" ]; then
+    source utils.sh
+    get_azure_config  > /etc/kubernetes/cloud-provider-config
+  fi
+fi
+
 if [ "$1" == "kubelet" ]; then
     for i in $(DOCKER_API_VERSION=1.22 ./docker info 2>&1  | grep -i 'docker root dir' | cut -f2 -d:) /var/lib/docker /run /var/run; do
         for m in $(tac /proc/mounts | awk '{print $2}' | grep ^${i}/); do
@@ -87,6 +95,11 @@ FQDN=$(hostname --fqdn || hostname)
 
 if [ "$1" == "kubelet" ]; then
     CGROUPDRIVER=$(docker info | grep -i 'cgroup driver' | awk '{print $3}')
+    # Azure API uses hostnames not FQDNs, if FQDN is used,
+    # kubelet wouldn't be able to get node information from the cloud provider.
+    if [ "${CLOUD_PROVIDER}" == "azure" ]; then
+      FQDN=$(hostname -s)
+    fi
     exec "$@" --cgroup-driver=$CGROUPDRIVER --hostname-override ${FQDN}
 fi
 
