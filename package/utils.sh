@@ -12,7 +12,6 @@ get_azure_config() {
   local az_vm_nic=$(az vm nic list -g ${az_resources_group} --vm-name ${az_vm_name} | jq -r .[0].id | cut -d "/" -f 9)
   local az_subnet_name=$(az vm nic show -g ${az_resources_group} --vm-name ${az_vm_name} --nic ${az_vm_nic}| jq -r .ipConfigurations[0].subnet.id| cut -d"/" -f 11)
   local az_vnet_name=$(az vm nic show -g ${az_resources_group} --vm-name ${az_vm_name} --nic ${az_vm_nic}| jq -r .ipConfigurations[0].subnet.id| cut -d"/" -f 9)
-  local az_security_group=$(az vm nic show -g ${az_resources_group} --vm-name ${az_vm_name} --nic ${az_vm_nic}| jq -r .networkSecurityGroup.id| cut -d"/" -f 9)
 
   az logout 2>&1 > /dev/null
 
@@ -25,5 +24,7 @@ get_azure_config() {
   echo "resourceGroup: ${az_resources_group}"
   echo "subnetName: ${az_subnet_name}"
   echo "vnetName: ${az_vnet_name}"
-  echo "securityGroupName: ${az_security_group}"
+  if [ "${AZURE_SEC_GROUP}" != "" ]; then
+    echo "securityGroupName: ${AZURE_SEC_GROUP}"
+  fi
 }
