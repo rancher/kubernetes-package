@@ -19,6 +19,9 @@ spec:
           - name: "tiller"
             image: "$GCR_IO_REGISTRY/$HELM_IMAGE_NAMESPACE/tiller:v2.6.1"
             imagePullPolicy: "Always"
+            command:
+            - /tiller
+            - --v=$ADDONS_LOG_VERBOSITY_LEVEL
             ports:
              - name: "tiller"
                containerPort: 44134

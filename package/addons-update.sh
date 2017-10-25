@@ -46,7 +46,7 @@ DNS_REPLICAS=${DNS_REPLICAS:-1}
 DNS_CLUSTER_IP=${DNS_CLUSTER_IP:-10.43.0.10}
 BASE_IMAGE_NAMESPACE=${BASE_IMAGE_NAMESPACE:-google_containers} 
 HELM_IMAGE_NAMESPACE=${HELM_IMAGE_NAMESPACE:-kubernetes-helm}
-
+ADDONS_LOG_VERBOSITY_LEVEL=${ADDONS_LOG_VERBOSITY_LEVEL:-2}
 
 INFLUXDB_HOST_PATH=${INFLUXDB_HOST_PATH:-}
 if [ "$INFLUXDB_HOST_PATH" == "" ]; then
@@ -64,6 +64,7 @@ for f in $(find /etc/kubernetes/addons -name '*.yaml'); do
   sed -i "s|\$BASE_IMAGE_NAMESPACE|$BASE_IMAGE_NAMESPACE|g" ${f}
   sed -i "s|\$HELM_IMAGE_NAMESPACE|$HELM_IMAGE_NAMESPACE|g" ${f}
   sed -i "s|\$DNS_CLUSTER_IP|$DNS_CLUSTER_IP|g" ${f}
+  sed -i "s|\$ADDONS_LOG_VERBOSITY_LEVEL|$ADDONS_LOG_VERBOSITY_LEVEL|g" ${f}
   kubectl --namespace=kube-system replace --force -f ${f}
 done
 

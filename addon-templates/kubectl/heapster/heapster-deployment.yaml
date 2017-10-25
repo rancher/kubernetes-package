@@ -18,4 +18,5 @@ spec:
         - /heapster
         - --source=kubernetes:https://$KUBERNETES_SERVICE_HOST:443?inClusterConfig=true&useServiceAccount=true
         - --sink=influxdb:http://monitoring-influxdb.kube-system.svc.cluster.local:8086?retention=$INFLUXDB_RETENTION
+        - --v=$ADDONS_LOG_VERBOSITY_LEVEL
       serviceAccountName: io-rancher-system

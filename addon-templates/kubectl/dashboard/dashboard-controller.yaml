@@ -21,6 +21,8 @@ spec:
       containers:
       - name: kubernetes-dashboard
         image: $GCR_IO_REGISTRY/$BASE_IMAGE_NAMESPACE/kubernetes-dashboard-amd64:v1.6.3
+        args:
+        - --v=$ADDONS_LOG_VERBOSITY_LEVEL
         resources:
           # keep request = limit to keep this container in guaranteed class
           limits:

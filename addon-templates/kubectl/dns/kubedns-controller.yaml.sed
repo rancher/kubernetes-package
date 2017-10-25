@@ -108,7 +108,7 @@ spec:
         - --domain=$DNS_DOMAIN.
         - --dns-port=10053
         - --config-dir=/kube-dns-config
-        - --v=2
+        - --v=$ADDONS_LOG_VERBOSITY_LEVEL
         env:
         - name: PROMETHEUS_PORT
           value: "10055"
