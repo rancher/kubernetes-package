@@ -177,7 +177,7 @@ spec:
           failureThreshold: 3
           periodSeconds: 2
         args:
-        - --v=2
+        - --v=$ADDONS_LOG_VERBOSITY_LEVEL
         - --logtostderr
         - --probe=kubedns,127.0.0.1:10053,kubernetes.default.svc.$DNS_DOMAIN,5,A
         - --probe=dnsmasq,127.0.0.1:53,kubernetes.default.svc.$DNS_DOMAIN,5,A
