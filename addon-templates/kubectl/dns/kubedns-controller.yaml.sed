@@ -138,7 +138,7 @@ spec:
           failureThreshold: 3
           periodSeconds: 2
         args:
-        - -v=2
+        - --v=$ADDONS_LOG_VERBOSITY_LEVEL
         - -logtostderr
         - -configDir=/etc/k8s/dns/dnsmasq-nanny
         - -restartDnsmasq=true
