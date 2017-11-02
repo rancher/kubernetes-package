@@ -6,6 +6,10 @@ get_azure_config() {
   local az_location=$(curl  -s -H Metadata:true "${AZURE_META_URL}/location?api-version=2017-08-01&format=text")
   local az_vm_name=$(curl -s -H Metadata:true "${AZURE_META_URL}/name?api-version=2017-08-01&format=text")
 
+  # set the cloud to the correct one
+  if [ ! -z ${AZURE_CLOUD} ]; then
+    az cloud set --name ${AZURE_CLOUD}
+  fi
   # login to Azure
   az login --service-principal -u ${AZURE_CLIENT_ID} -p ${AZURE_CLIENT_SECRET} --tenant ${AZURE_TENANT_ID} 2>&1 > /dev/null
 
