@@ -22,6 +22,7 @@ get_azure_config() {
   local az_vm_nic=$(az vm nic list -g ${az_resources_group} --vm-name ${az_vm_name} | jq -r .[0].id | cut -d "/" -f 9)
   local az_subnet_name=$(az vm nic show -g ${az_resources_group} --vm-name ${az_vm_name} --nic ${az_vm_nic}| jq -r .ipConfigurations[0].subnet.id| cut -d"/" -f 11)
   local az_vnet_name=$(az vm nic show -g ${az_resources_group} --vm-name ${az_vm_name} --nic ${az_vm_nic}| jq -r .ipConfigurations[0].subnet.id| cut -d"/" -f 9)
+  local az_vnet_resource_group=$(az vm nic show -g ${az_resources_group} --vm-name ${az_vm_name} --nic ${az_vm_nic}| jq -r .ipConfigurations[0].subnet.id| cut -d"/" -f 5)
 
   az logout 2>&1 > /dev/null
 
@@ -32,6 +33,7 @@ get_azure_config() {
   echo "cloud: ${AZURE_CLOUD:-AzurePublicCloud}"
   echo "location: ${az_location}"
   echo "resourceGroup: ${az_resources_group}"
+  echo "vnetResourceGroup: ${az_vnet_resource_group}"
   echo "subnetName: ${az_subnet_name}"
   echo "vnetName: ${az_vnet_name}"
   if [ "${AZURE_SEC_GROUP}" != "" ]; then
