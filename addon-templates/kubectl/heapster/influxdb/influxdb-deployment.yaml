@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: influxdb
-        image: $GCR_IO_REGISTRY/$BASE_IMAGE_NAMESPACE/heapster-influxdb-amd64:v1.3.3
+        image: $GCR_IO_REGISTRY/$BASE_IMAGE_NAMESPACE/$INFLUXDB_IMAGE
         volumeMounts:
         - mountPath: /data
           name: influxdb-storage

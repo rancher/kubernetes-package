@@ -16,14 +16,6 @@
 # in sync with this file.
 
 # Warning: This is a file generated from the base underscore template file: kubedns-controller.yaml.base
-
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: kube-dns
-  namespace: kube-system
-  labels:
-    addonmanager.kubernetes.io/mode: EnsureExists
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -71,7 +63,7 @@ spec:
             topologyKey: kubernetes.io/hostname
       containers:
       - name: kubedns
-        image: $GCR_IO_REGISTRY/$BASE_IMAGE_NAMESPACE/k8s-dns-kube-dns-amd64:1.14.5
+        image: $GCR_IO_REGISTRY/$BASE_IMAGE_NAMESPACE/$KUBEDNS_IMAGE
         resources:
           # TODO: Set memory limits when we've profiled the container for large
           # clusters, then set request = limit to keep this container in

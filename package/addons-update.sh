@@ -1,5 +1,7 @@
 #!/bin/bash
-set -e -x
+set -x
+
+function semver_lt() { test "$(printf '%s\n' "$@" | sort -r -V | head -n 1)" != "$1"; }
 
 if [ ${DISABLE_ADDONS} == "true" ]; then
     echo "addons have been disabled"
@@ -39,12 +41,22 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 EOF
 
+cat <<EOF | kubectl apply -f - || true
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kube-dns
+  namespace: kube-system
+  labels:
+    addonmanager.kubernetes.io/mode: EnsureExists
+EOF
+
 GCR_IO_REGISTRY=${REGISTRY:-gcr.io}
 DOCKER_IO_REGISTRY=${REGISTRY:-docker.io}
 INFLUXDB_RETENTION=${INFLUXDB_RETENTION:-0s}
 DNS_REPLICAS=${DNS_REPLICAS:-1}
 DNS_CLUSTER_IP=${DNS_CLUSTER_IP:-10.43.0.10}
-BASE_IMAGE_NAMESPACE=${BASE_IMAGE_NAMESPACE:-google_containers} 
+BASE_IMAGE_NAMESPACE=${BASE_IMAGE_NAMESPACE:-google_containers}
 HELM_IMAGE_NAMESPACE=${HELM_IMAGE_NAMESPACE:-kubernetes-helm}
 ADDONS_LOG_VERBOSITY_LEVEL=${ADDONS_LOG_VERBOSITY_LEVEL:-2}
 
@@ -55,7 +67,16 @@ else
   INFLUXDB_VOLUME="hostPath:\n          path: $INFLUXDB_HOST_PATH"
 fi
 
-for f in $(find /etc/kubernetes/addons -name '*.yaml'); do
+# Addons Images
+ADDONS_DIR=/etc/kubernetes/addons
+DASHBOARD_IMAGE=kubernetes-dashboard-amd64:v1.7.1
+KUBEDNS_IMAGE=k8s-dns-kube-dns-amd64:1.14.5
+GRAFANA_IMAGE=heapster-grafana-amd64:v4.4.3
+HEAPSTER_IMAGE=heapster-amd64:v1.4.0
+INFLUXDB_IMAGE=heapster-influxdb-amd64:v1.3.3
+TILLER_IMAGE=tiller:v2.6.1
+
+for f in $(find $ADDONS_DIR -name '*.yaml'); do
   sed -i "s|\$GCR_IO_REGISTRY|$GCR_IO_REGISTRY|g" ${f}
   sed -i "s|\$DOCKER_IO_REGISTRY|$DOCKER_IO_REGISTRY|g" ${f}
   sed -i "s|\$INFLUXDB_VOLUME|$INFLUXDB_VOLUME|g" ${f}
@@ -65,7 +86,32 @@ for f in $(find /etc/kubernetes/addons -name '*.yaml'); do
   sed -i "s|\$HELM_IMAGE_NAMESPACE|$HELM_IMAGE_NAMESPACE|g" ${f}
   sed -i "s|\$DNS_CLUSTER_IP|$DNS_CLUSTER_IP|g" ${f}
   sed -i "s|\$ADDONS_LOG_VERBOSITY_LEVEL|$ADDONS_LOG_VERBOSITY_LEVEL|g" ${f}
-  kubectl --namespace=kube-system replace --force -f ${f}
+  sed -i "s|\$DASHBOARD_IMAGE|$DASHBOARD_IMAGE|g" ${f}
+  sed -i "s|\$KUBEDNS_IMAGE|$KUBEDNS_IMAGE|g" ${f}
+  sed -i "s|\$GRAFANA_IMAGE|$GRAFANA_IMAGE|g" ${f}
+  sed -i "s|\$HEAPSTER_IMAGE|$HEAPSTER_IMAGE|g" ${f}
+  sed -i "s|\$INFLUXDB_IMAGE|$INFLUXDB_IMAGE|g" ${f}
+  sed -i "s|\$TILLER_IMAGE|$TILLER_IMAGE|g" ${f}
+done
+
+addons_images=(
+    "k8s-app=kubernetes-dashboard,$DASHBOARD_IMAGE,$ADDONS_DIR/dashboard"
+    "k8s-app=kube-dns,$KUBEDNS_IMAGE,$ADDONS_DIR/dns"
+    "k8s-app=grafana,$GRAFANA_IMAGE,$ADDONS_DIR/heapster/grafana"
+    "k8s-app=heapster,$HEAPSTER_IMAGE,$ADDONS_DIR/heapster/heapster"
+    "k8s-app=influxdb,$INFLUXDB_IMAGE,$ADDONS_DIR/heapster/influxdb"
+    "app=helm,$TILLER_IMAGE,$ADDONS_DIR/helm"
+   )
+
+# Check Addon version
+for i in "${addons_images[@]}"; do
+  current_version=$(kubectl get deployments -n kube-system -o=jsonpath="{..image}" -l "$(echo $i | cut -d"," -f1)" | cut -d" " -f1 | cut -d":" -f2)
+  desired_version=$(grep -r "$(echo $i | cut -d"," -f2)" $ADDONS_DIR | cut -d":" -f4)
+  if [ -z "${current_version}" ]; then
+    kubectl --namespace=kube-system replace --force -f $(echo $i | cut -d"," -f3)
+  elif semver_lt ${current_version} ${desired_version}; then
+    kubectl --namespace=kube-system replace --force -f $(echo $i | cut -d"," -f3)
+  fi
 done
 
 # Remove orphaned heapster
