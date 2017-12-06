@@ -17,7 +17,7 @@ spec:
       serviceAccountName: "io-rancher-system"
       containers:
           - name: "tiller"
-            image: "$GCR_IO_REGISTRY/$HELM_IMAGE_NAMESPACE/tiller:v2.6.1"
+            image: $GCR_IO_REGISTRY/$HELM_IMAGE_NAMESPACE/$TILLER_IMAGE
             imagePullPolicy: "Always"
             command:
             - /tiller
