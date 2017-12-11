@@ -59,6 +59,8 @@ DNS_CLUSTER_IP=${DNS_CLUSTER_IP:-10.43.0.10}
 BASE_IMAGE_NAMESPACE=${BASE_IMAGE_NAMESPACE:-google_containers}
 HELM_IMAGE_NAMESPACE=${HELM_IMAGE_NAMESPACE:-kubernetes-helm}
 ADDONS_LOG_VERBOSITY_LEVEL=${ADDONS_LOG_VERBOSITY_LEVEL:-2}
+DASHBOARD_CPU_LIMIT=${DASHBOARD_CPU_LIMIT:-100m}
+DASHBOARD_MEMORY_LIMIT=${DASHBOARD_MEMORY_LIMIT:-300Mi}
 
 INFLUXDB_HOST_PATH=${INFLUXDB_HOST_PATH:-}
 if [ "$INFLUXDB_HOST_PATH" == "" ]; then
@@ -68,6 +70,8 @@ else
 fi
 
 # Addons Images
+# If any of these versions are updated, please also update them in
+# addon-templates/README.md
 ADDONS_DIR=/etc/kubernetes/addons
 DASHBOARD_IMAGE=kubernetes-dashboard-amd64:v1.7.1
 KUBEDNS_IMAGE=k8s-dns-kube-dns-amd64:1.14.5
@@ -92,6 +96,8 @@ for f in $(find $ADDONS_DIR -name '*.yaml'); do
   sed -i "s|\$HEAPSTER_IMAGE|$HEAPSTER_IMAGE|g" ${f}
   sed -i "s|\$INFLUXDB_IMAGE|$INFLUXDB_IMAGE|g" ${f}
   sed -i "s|\$TILLER_IMAGE|$TILLER_IMAGE|g" ${f}
+  sed -i "s|\$DASHBOARD_CPU_LIMIT|$DASHBOARD_CPU_LIMIT|g" ${f}
+  sed -i "s|\$DASHBOARD_MEMORY_LIMIT|$DASHBOARD_MEMORY_LIMIT|g" ${f}
 done
 
 addons_images=(
