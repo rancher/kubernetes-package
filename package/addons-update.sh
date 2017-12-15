@@ -73,7 +73,7 @@ fi
 # If any of these versions are updated, please also update them in
 # addon-templates/README.md
 ADDONS_DIR=/etc/kubernetes/addons
-DASHBOARD_IMAGE=kubernetes-dashboard-amd64:v1.7.1
+DASHBOARD_IMAGE=kubernetes-dashboard-amd64:v1.8.0
 KUBEDNS_IMAGE=k8s-dns-kube-dns-amd64:1.14.5
 GRAFANA_IMAGE=heapster-grafana-amd64:v4.4.3
 HEAPSTER_IMAGE=heapster-amd64:v1.4.0
