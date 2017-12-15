@@ -2,7 +2,7 @@
 
 The following images are used by kubernetes addons:
 - Kubernetes dashboard:
-    - kubernetes-dashboard-amd64:v1.7.1
+    - kubernetes-dashboard-amd64:v1.8.0
 - Kube-dns:
     - k8s-dns-kube-dns-amd64:1.14.5
     - k8s-dns-dnsmasq-nanny-amd64:1.14.5
