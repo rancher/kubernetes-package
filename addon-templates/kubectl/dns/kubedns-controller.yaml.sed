@@ -118,7 +118,7 @@ spec:
         - name: kube-dns-config
           mountPath: /kube-dns-config
       - name: dnsmasq
-        image: $GCR_IO_REGISTRY/$BASE_IMAGE_NAMESPACE/k8s-dns-dnsmasq-nanny-amd64:1.14.5
+        image: $GCR_IO_REGISTRY/$BASE_IMAGE_NAMESPACE/$DNSMASQ_IMAGE
         livenessProbe:
           httpGet:
             path: /healthcheck/dnsmasq
@@ -157,7 +157,7 @@ spec:
         - name: kube-dns-config
           mountPath: /etc/k8s/dns/dnsmasq-nanny
       - name: sidecar
-        image: $GCR_IO_REGISTRY/$BASE_IMAGE_NAMESPACE/k8s-dns-sidecar-amd64:1.14.5
+        image: $GCR_IO_REGISTRY/$BASE_IMAGE_NAMESPACE/$DNS_SIDECAR_IMAGE
         livenessProbe:
           httpGet:
             path: /metrics
