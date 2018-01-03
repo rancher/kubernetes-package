@@ -74,11 +74,13 @@ fi
 # addon-templates/README.md
 ADDONS_DIR=/etc/kubernetes/addons
 DASHBOARD_IMAGE=kubernetes-dashboard-amd64:v1.8.0
-KUBEDNS_IMAGE=k8s-dns-kube-dns-amd64:1.14.5
+KUBEDNS_IMAGE=k8s-dns-kube-dns-amd64:1.14.7
+DNSMASQ_IMAGE=k8s-dns-dnsmasq-nanny-amd64:1.14.7
+DNS_SIDECAR_IMAGE=k8s-dns-sidecar-amd64:1.14.7
 GRAFANA_IMAGE=heapster-grafana-amd64:v4.4.3
-HEAPSTER_IMAGE=heapster-amd64:v1.4.0
+HEAPSTER_IMAGE=heapster-amd64:v1.5.0
 INFLUXDB_IMAGE=heapster-influxdb-amd64:v1.3.3
-TILLER_IMAGE=tiller:v2.6.1
+TILLER_IMAGE=tiller:v2.7.2
 
 for f in $(find $ADDONS_DIR -name '*.yaml'); do
   sed -i "s|\$GCR_IO_REGISTRY|$GCR_IO_REGISTRY|g" ${f}
@@ -92,6 +94,8 @@ for f in $(find $ADDONS_DIR -name '*.yaml'); do
   sed -i "s|\$ADDONS_LOG_VERBOSITY_LEVEL|$ADDONS_LOG_VERBOSITY_LEVEL|g" ${f}
   sed -i "s|\$DASHBOARD_IMAGE|$DASHBOARD_IMAGE|g" ${f}
   sed -i "s|\$KUBEDNS_IMAGE|$KUBEDNS_IMAGE|g" ${f}
+  sed -i "s|\$DNSMASQ_IMAGE|$DNSMASQ_IMAGE|g" ${f}
+  sed -i "s|\$DNS_SIDECAR_IMAGE|$DNS_SIDECAR_IMAGE|g" ${f}
   sed -i "s|\$GRAFANA_IMAGE|$GRAFANA_IMAGE|g" ${f}
   sed -i "s|\$HEAPSTER_IMAGE|$HEAPSTER_IMAGE|g" ${f}
   sed -i "s|\$INFLUXDB_IMAGE|$INFLUXDB_IMAGE|g" ${f}
