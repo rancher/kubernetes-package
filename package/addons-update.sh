@@ -113,11 +113,13 @@ addons_images=(
 for i in "${addons_images[@]}"; do
   current_version=$(kubectl get deployments -n kube-system -o=jsonpath="{..image}" -l "$(echo $i | cut -d"," -f1)" | cut -d" " -f1 | cut -d":" -f2)
   desired_version=$(grep -r "$(echo $i | cut -d"," -f2)" $ADDONS_DIR | cut -d":" -f4)
+  set -e
   if [ -z "${current_version}" ]; then
     kubectl --namespace=kube-system replace --force -f $(echo $i | cut -d"," -f3)
   elif semver_lt ${current_version} ${desired_version}; then
     kubectl --namespace=kube-system replace --force -f $(echo $i | cut -d"," -f3)
   fi
+  set +e
 done
 
 # Remove orphaned heapster
