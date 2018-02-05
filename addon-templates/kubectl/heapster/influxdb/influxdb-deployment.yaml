@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: influxdb
-        image: $GCR_IO_REGISTRY/$BASE_IMAGE_NAMESPACE/$INFLUXDB_IMAGE
+        image: $DOCKER_IO_REGISTRY/$BASE_IMAGE_NAMESPACE/$INFLUXDB_IMAGE
         volumeMounts:
         - mountPath: /data
           name: influxdb-storage

@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: grafana
-        image: $GCR_IO_REGISTRY/$BASE_IMAGE_NAMESPACE/$GRAFANA_IMAGE
+        image: $DOCKER_IO_REGISTRY/$BASE_IMAGE_NAMESPACE/$GRAFANA_IMAGE
         ports:
           - containerPort: 3000
             protocol: TCP

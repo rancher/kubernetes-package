@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: heapster
-        image: $GCR_IO_REGISTRY/$BASE_IMAGE_NAMESPACE/$HEAPSTER_IMAGE
+        image: $DOCKER_IO_REGISTRY/$BASE_IMAGE_NAMESPACE/$HEAPSTER_IMAGE
         command:
         - /heapster
         - --source=kubernetes:https://$KUBERNETES_SERVICE_HOST:443?inClusterConfig=true&useServiceAccount=true
