@@ -117,6 +117,8 @@ for i in "${addons_images[@]}"; do
   set -e
   if [ -z "${current_version}" ]; then
     kubectl --namespace=kube-system replace --force -f $(echo $i | cut -d"," -f3)
+  elif [ "${current_version}" == "${desired_version}" ]; then
+    kubectl --namespace=kube-system replace --force -f $(echo $i | cut -d"," -f3)
   elif semver_lt ${current_version} ${desired_version}; then
     kubectl --namespace=kube-system replace --force -f $(echo $i | cut -d"," -f3)
   fi
