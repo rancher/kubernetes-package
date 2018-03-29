@@ -23,14 +23,14 @@ DNS_SIDECAR_IMAGE={{.KubeDNSSidecar}}
 )
 
 func main() {
-	k8s_version := os.Getenv("KUBERNETES_VERSION")
+	k8s_version := os.Getenv("KUBERNETES_PACKAGE_VERSION")
 	if k8s_version == "" {
-		logrus.Errorf("KUBERNETES_VERSION version is not set")
+		logrus.Errorf("KUBERNETES_PACKAGE_VERSION version is not set")
 		os.Exit(1)
 	}
-	images, ok := v3.RancherK8sVersionToSystemImages[k8s_version]
+	images, ok := v3.K8SVersionToSystemImages16[k8s_version]
 	if !ok {
-		logrus.Errorf("Counldn't find images map for $KUBERNETES_VERSION=\"%s\"", k8s_version)
+		logrus.Errorf("Counldn't find images map for $KUBERNETES_PACKAGE_VERSION=\"%s\"", k8s_version)
 		os.Exit(1)
 	}
 	file, err := os.Create(imageListFileName)
