@@ -16,6 +16,7 @@ const (
 	// ClusterConditionProvisioned Cluster is provisioned
 	ClusterConditionProvisioned condition.Cond = "Provisioned"
 	ClusterConditionUpdated     condition.Cond = "Updated"
+	ClusterConditionWaiting     condition.Cond = "Waiting"
 	ClusterConditionRemoved     condition.Cond = "Removed"
 	// ClusterConditionNoDiskPressure true when all cluster nodes have sufficient disk
 	ClusterConditionNoDiskPressure condition.Cond = "NoDiskPressure"
@@ -28,6 +29,7 @@ const (
 	ClusterConditionAddonDeploy              condition.Cond = "AddonDeploy"
 	ClusterConditionSystemAccountCreated     condition.Cond = "SystemAccountCreated"
 	ClusterConditionAgentDeployed            condition.Cond = "AgentDeployed"
+	ClusterConditionGlobalAdminsSynced       condition.Cond = "GlobalAdminsSynced"
 
 	ClusterDriverImported = "imported"
 	ClusterDriverLocal    = "local"
@@ -51,7 +53,7 @@ type ClusterSpec struct {
 	DisplayName                          string                         `json:"displayName"`
 	Description                          string                         `json:"description"`
 	Internal                             bool                           `json:"internal" norman:"nocreate,noupdate"`
-	DesiredAgentImage                    string                         `json:"desiredAgentImage" norman:"nocreate,noupdate"`
+	DesiredAgentImage                    string                         `json:"desiredAgentImage"`
 	ImportedConfig                       *ImportedConfig                `json:"importedConfig,omitempty" norman:"nocreate,noupdate"`
 	GoogleKubernetesEngineConfig         *GoogleKubernetesEngineConfig  `json:"googleKubernetesEngineConfig,omitempty"`
 	AzureKubernetesServiceConfig         *AzureKubernetesServiceConfig  `json:"azureKubernetesServiceConfig,omitempty"`
@@ -70,19 +72,20 @@ type ClusterStatus struct {
 	Conditions []ClusterCondition `json:"conditions,omitempty"`
 	//Component statuses will represent cluster's components (etcd/controller/scheduler) health
 	// https://kubernetes.io/docs/api-reference/v1.8/#componentstatus-v1-core
-	Driver              string                   `json:"driver"`
-	AgentImage          string                   `json:"agentImage"`
-	ComponentStatuses   []ClusterComponentStatus `json:"componentStatuses,omitempty"`
-	APIEndpoint         string                   `json:"apiEndpoint,omitempty"`
-	ServiceAccountToken string                   `json:"serviceAccountToken,omitempty"`
-	CACert              string                   `json:"caCert,omitempty"`
-	Capacity            v1.ResourceList          `json:"capacity,omitempty"`
-	Allocatable         v1.ResourceList          `json:"allocatable,omitempty"`
-	AppliedSpec         ClusterSpec              `json:"appliedSpec,omitempty"`
-	FailedSpec          *ClusterSpec             `json:"failedSpec,omitempty"`
-	Requested           v1.ResourceList          `json:"requested,omitempty"`
-	Limits              v1.ResourceList          `json:"limits,omitempty"`
-	ClusterName         string                   `json:"clusterName,omitempty"`
+	Driver                               string                   `json:"driver"`
+	AgentImage                           string                   `json:"agentImage"`
+	ComponentStatuses                    []ClusterComponentStatus `json:"componentStatuses,omitempty"`
+	APIEndpoint                          string                   `json:"apiEndpoint,omitempty"`
+	ServiceAccountToken                  string                   `json:"serviceAccountToken,omitempty"`
+	CACert                               string                   `json:"caCert,omitempty"`
+	Capacity                             v1.ResourceList          `json:"capacity,omitempty"`
+	Allocatable                          v1.ResourceList          `json:"allocatable,omitempty"`
+	AppliedSpec                          ClusterSpec              `json:"appliedSpec,omitempty"`
+	FailedSpec                           *ClusterSpec             `json:"failedSpec,omitempty"`
+	Requested                            v1.ResourceList          `json:"requested,omitempty"`
+	Limits                               v1.ResourceList          `json:"limits,omitempty"`
+	ClusterName                          string                   `json:"clusterName,omitempty"`
+	AppliedPodSecurityPolicyTemplateName string                   `json:"appliedPodSecurityPolicyTemplateId"`
 }
 
 type ClusterComponentStatus struct {
@@ -219,4 +222,8 @@ type ClusterRegistrationTokenStatus struct {
 	NodeCommand     string `json:"nodeCommand"`
 	ManifestURL     string `json:"manifestUrl"`
 	Token           string `json:"token"`
+}
+
+type GenerateKubeConfigOutput struct {
+	Config string `json:"config"`
 }
