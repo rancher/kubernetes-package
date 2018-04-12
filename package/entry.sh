@@ -84,8 +84,11 @@ if [ "$1" == "kubelet" ]; then
     done
     mount --rbind /host/dev /dev
     mount -o rw,remount /sys/fs/cgroup 2>/dev/null || true
-    [ -d /sys/fs/cgroup/cpuacct,cpu ] && rm -rf  /sys/fs/cgroup/cpuacct,cpu
-    ln -s /sys/fs/cgroup/cpu,cpuacct /sys/fs/cgroup/cpuacct,cpu 2>/dev/null || true
+    if ! [ /sys/fs/cgroup/cpu,cpuacct -ef /sys/fs/cgroup/cpuacct,cpu ]
+    then 
+      rm -rf  /sys/fs/cgroup/cpuacct,cpu
+      ln -s /sys/fs/cgroup/cpu,cpuacct /sys/fs/cgroup/cpuacct,cpu 2>/dev/null || true
+    fi
     for i in /sys/fs/cgroup/*; do
         if [ -d $i ]; then
              mkdir -p $i/kubepods
