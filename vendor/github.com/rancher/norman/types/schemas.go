@@ -57,7 +57,7 @@ func (s *Schemas) Init(initFunc SchemasInitFunc) *Schemas {
 }
 
 func (s *Schemas) Err() error {
-	return NewErrors(s.errors...)
+	return NewErrors(s.errors)
 }
 
 func (s *Schemas) AddSchemas(schema *Schemas) *Schemas {
@@ -339,24 +339,24 @@ func (s *Schemas) SubContextVersionForSchema(schema *Schema) *APIVersion {
 	return nil
 }
 
-type MultiErrors struct {
-	Errors []error
+type multiErrors struct {
+	errors []error
 }
 
-func NewErrors(errors ...error) error {
+func NewErrors(errors []error) error {
 	if len(errors) == 0 {
 		return nil
 	} else if len(errors) == 1 {
 		return errors[0]
 	}
-	return &MultiErrors{
-		Errors: errors,
+	return &multiErrors{
+		errors: errors,
 	}
 }
 
-func (m *MultiErrors) Error() string {
+func (m *multiErrors) Error() string {
 	buf := bytes.NewBuffer(nil)
-	for _, err := range m.Errors {
+	for _, err := range m.errors {
 		if buf.Len() > 0 {
 			buf.WriteString(", ")
 		}
