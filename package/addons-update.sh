@@ -72,16 +72,6 @@ ADDONS_DIR=/etc/kubernetes/addons
 # image list generate from rancher/types
 # https://github.com/rancher/types/blob/master/apis/management.cattle.io/v3/k8s_defaults.go
 source addons_image_list
-# rancher/types has the images with registry namepsace. Since we have that configurable here, we need to remove it:
-TILLER_IMAGE=${TILLER_IMAGE#*/}
-KUBEDNS_IMAGE=${KUBEDNS_IMAGE#*/}
-DNSMASQ_IMAGE=${DNSMASQ_IMAGE#*/}
-GRAFANA_IMAGE=${GRAFANA_IMAGE#*/}
-HEAPSTER_IMAGE=${HEAPSTER_IMAGE#*/}
-INFLUXDB_IMAGE=${INFLUXDB_IMAGE#*/}
-DASHBOARD_IMAGE=${DASHBOARD_IMAGE#*/}
-DNS_SIDECAR_IMAGE=${DNS_SIDECAR_IMAGE#*/}
-
 
 for f in $(find $ADDONS_DIR -name '*.yaml'); do
   sed -i "s|\$DOCKER_IO_REGISTRY|$DOCKER_IO_REGISTRY|g" ${f}

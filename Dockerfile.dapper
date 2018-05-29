@@ -19,10 +19,8 @@ ENV DOCKER_URL_amd64=https://get.docker.com/builds/Linux/x86_64/docker-1.10.3 \
 RUN wget -O - ${!DOCKER_URL} > /usr/bin/docker && chmod +x /usr/bin/docker
 
 
-# addons image versions is generated based on KUBERNETES_PACKAGE_VERSION
-# it must be updated
-ENV KUBERNETES_PACKAGE_VERSION v1.10.0-rancher1-1
-ENV KUBERNETES_VERSION v1.10.0-rancher1
+
+ENV KUBERNETES_VERSION v1.9.5-rancher1
 
 
 ENV DOWNLOAD /usr/src
