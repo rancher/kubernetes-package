@@ -26,8 +26,7 @@ type Project struct {
 }
 
 type ProjectStatus struct {
-	Conditions                    []ProjectCondition `json:"conditions"`
-	PodSecurityPolicyTemplateName string             `json:"podSecurityPolicyTemplateId"`
+	Conditions []ProjectCondition `json:"conditions"`
 }
 
 type ProjectCondition struct {
@@ -46,9 +45,10 @@ type ProjectCondition struct {
 }
 
 type ProjectSpec struct {
-	DisplayName string `json:"displayName,omitempty" norman:"required"`
-	Description string `json:"description"`
-	ClusterName string `json:"clusterName,omitempty" norman:"required,type=reference[cluster]"`
+	DisplayName                   string `json:"displayName,omitempty" norman:"required"`
+	Description                   string `json:"description"`
+	ClusterName                   string `json:"clusterName,omitempty" norman:"required,type=reference[cluster]"`
+	PodSecurityPolicyTemplateName string `json:"podSecurityPolicyTemplateName,omitempty" norman:"type=reference[podSecurityPolicyTemplate]"`
 }
 
 type GlobalRole struct {
@@ -91,15 +91,6 @@ type PodSecurityPolicyTemplate struct {
 	Spec        extv1.PodSecurityPolicySpec `json:"spec,omitempty"`
 }
 
-type PodSecurityPolicyTemplateProjectBinding struct {
-	types.Namespaced
-	metav1.TypeMeta   `json:",inline"`
-	metav1.ObjectMeta `json:"metadata,omitempty"`
-
-	PodSecurityPolicyTemplateName string `json:"podSecurityPolicyTemplateId" norman:"required,type=reference[podSecurityPolicyTemplate]"`
-	TargetProjectName             string `json:"targetProjectId" norman:"required,type=reference[project]"`
-}
-
 type ProjectRoleTemplateBinding struct {
 	types.Namespaced
 	metav1.TypeMeta   `json:",inline"`
@@ -124,8 +115,4 @@ type ClusterRoleTemplateBinding struct {
 	GroupPrincipalName string `json:"groupPrincipalName,omitempty" norman:"type=reference[principal]"`
 	ClusterName        string `json:"clusterName,omitempty" norman:"required,type=reference[cluster]"`
 	RoleTemplateName   string `json:"roleTemplateName,omitempty" norman:"required,type=reference[roleTemplate]"`
-}
-
-type SetPodSecurityPolicyTemplateInput struct {
-	PodSecurityPolicyTemplateName string `json:"podSecurityPolicyTemplateId" norman:"required,type=reference[podSecurityPolicyTemplate]"`
 }

@@ -40,10 +40,6 @@ func RegisterDeepCopies(scheme *runtime.Scheme) error {
 			return nil
 		}, InType: reflect.TypeOf(&AlertStatus{})},
 		conversion.GeneratedDeepCopyFunc{Fn: func(in interface{}, out interface{}, c *conversion.Cloner) error {
-			in.(*AlertSystemImages).DeepCopyInto(out.(*AlertSystemImages))
-			return nil
-		}, InType: reflect.TypeOf(&AlertSystemImages{})},
-		conversion.GeneratedDeepCopyFunc{Fn: func(in interface{}, out interface{}, c *conversion.Cloner) error {
 			in.(*AuthAppInput).DeepCopyInto(out.(*AuthAppInput))
 			return nil
 		}, InType: reflect.TypeOf(&AuthAppInput{})},
@@ -99,10 +95,6 @@ func RegisterDeepCopies(scheme *runtime.Scheme) error {
 			in.(*ChangePasswordInput).DeepCopyInto(out.(*ChangePasswordInput))
 			return nil
 		}, InType: reflect.TypeOf(&ChangePasswordInput{})},
-		conversion.GeneratedDeepCopyFunc{Fn: func(in interface{}, out interface{}, c *conversion.Cloner) error {
-			in.(*CloudProvider).DeepCopyInto(out.(*CloudProvider))
-			return nil
-		}, InType: reflect.TypeOf(&CloudProvider{})},
 		conversion.GeneratedDeepCopyFunc{Fn: func(in interface{}, out interface{}, c *conversion.Cloner) error {
 			in.(*Cluster).DeepCopyInto(out.(*Cluster))
 			return nil
@@ -272,10 +264,6 @@ func RegisterDeepCopies(scheme *runtime.Scheme) error {
 			return nil
 		}, InType: reflect.TypeOf(&Filter{})},
 		conversion.GeneratedDeepCopyFunc{Fn: func(in interface{}, out interface{}, c *conversion.Cloner) error {
-			in.(*GenerateKubeConfigOutput).DeepCopyInto(out.(*GenerateKubeConfigOutput))
-			return nil
-		}, InType: reflect.TypeOf(&GenerateKubeConfigOutput{})},
-		conversion.GeneratedDeepCopyFunc{Fn: func(in interface{}, out interface{}, c *conversion.Cloner) error {
 			in.(*GithubClusterConfig).DeepCopyInto(out.(*GithubClusterConfig))
 			return nil
 		}, InType: reflect.TypeOf(&GithubClusterConfig{})},
@@ -396,10 +384,6 @@ func RegisterDeepCopies(scheme *runtime.Scheme) error {
 			return nil
 		}, InType: reflect.TypeOf(&LoggingStatus{})},
 		conversion.GeneratedDeepCopyFunc{Fn: func(in interface{}, out interface{}, c *conversion.Cloner) error {
-			in.(*LoggingSystemImages).DeepCopyInto(out.(*LoggingSystemImages))
-			return nil
-		}, InType: reflect.TypeOf(&LoggingSystemImages{})},
-		conversion.GeneratedDeepCopyFunc{Fn: func(in interface{}, out interface{}, c *conversion.Cloner) error {
 			in.(*NetworkConfig).DeepCopyInto(out.(*NetworkConfig))
 			return nil
 		}, InType: reflect.TypeOf(&NetworkConfig{})},
@@ -508,10 +492,6 @@ func RegisterDeepCopies(scheme *runtime.Scheme) error {
 			return nil
 		}, InType: reflect.TypeOf(&Pipeline{})},
 		conversion.GeneratedDeepCopyFunc{Fn: func(in interface{}, out interface{}, c *conversion.Cloner) error {
-			in.(*PipelineCondition).DeepCopyInto(out.(*PipelineCondition))
-			return nil
-		}, InType: reflect.TypeOf(&PipelineCondition{})},
-		conversion.GeneratedDeepCopyFunc{Fn: func(in interface{}, out interface{}, c *conversion.Cloner) error {
 			in.(*PipelineExecution).DeepCopyInto(out.(*PipelineExecution))
 			return nil
 		}, InType: reflect.TypeOf(&PipelineExecution{})},
@@ -552,10 +532,6 @@ func RegisterDeepCopies(scheme *runtime.Scheme) error {
 			return nil
 		}, InType: reflect.TypeOf(&PipelineStatus{})},
 		conversion.GeneratedDeepCopyFunc{Fn: func(in interface{}, out interface{}, c *conversion.Cloner) error {
-			in.(*PipelineSystemImages).DeepCopyInto(out.(*PipelineSystemImages))
-			return nil
-		}, InType: reflect.TypeOf(&PipelineSystemImages{})},
-		conversion.GeneratedDeepCopyFunc{Fn: func(in interface{}, out interface{}, c *conversion.Cloner) error {
 			in.(*PodSecurityPolicyTemplate).DeepCopyInto(out.(*PodSecurityPolicyTemplate))
 			return nil
 		}, InType: reflect.TypeOf(&PodSecurityPolicyTemplate{})},
@@ -563,14 +539,6 @@ func RegisterDeepCopies(scheme *runtime.Scheme) error {
 			in.(*PodSecurityPolicyTemplateList).DeepCopyInto(out.(*PodSecurityPolicyTemplateList))
 			return nil
 		}, InType: reflect.TypeOf(&PodSecurityPolicyTemplateList{})},
-		conversion.GeneratedDeepCopyFunc{Fn: func(in interface{}, out interface{}, c *conversion.Cloner) error {
-			in.(*PodSecurityPolicyTemplateProjectBinding).DeepCopyInto(out.(*PodSecurityPolicyTemplateProjectBinding))
-			return nil
-		}, InType: reflect.TypeOf(&PodSecurityPolicyTemplateProjectBinding{})},
-		conversion.GeneratedDeepCopyFunc{Fn: func(in interface{}, out interface{}, c *conversion.Cloner) error {
-			in.(*PodSecurityPolicyTemplateProjectBindingList).DeepCopyInto(out.(*PodSecurityPolicyTemplateProjectBindingList))
-			return nil
-		}, InType: reflect.TypeOf(&PodSecurityPolicyTemplateProjectBindingList{})},
 		conversion.GeneratedDeepCopyFunc{Fn: func(in interface{}, out interface{}, c *conversion.Cloner) error {
 			in.(*PortCheck).DeepCopyInto(out.(*PortCheck))
 			return nil
@@ -668,10 +636,6 @@ func RegisterDeepCopies(scheme *runtime.Scheme) error {
 			return nil
 		}, InType: reflect.TypeOf(&ProjectStatus{})},
 		conversion.GeneratedDeepCopyFunc{Fn: func(in interface{}, out interface{}, c *conversion.Cloner) error {
-			in.(*PublicEndpoint).DeepCopyInto(out.(*PublicEndpoint))
-			return nil
-		}, InType: reflect.TypeOf(&PublicEndpoint{})},
-		conversion.GeneratedDeepCopyFunc{Fn: func(in interface{}, out interface{}, c *conversion.Cloner) error {
 			in.(*PublishImageConfig).DeepCopyInto(out.(*PublishImageConfig))
 			return nil
 		}, InType: reflect.TypeOf(&PublishImageConfig{})},
@@ -703,6 +667,10 @@ func RegisterDeepCopies(scheme *runtime.Scheme) error {
 			in.(*RancherKubernetesEngineConfig).DeepCopyInto(out.(*RancherKubernetesEngineConfig))
 			return nil
 		}, InType: reflect.TypeOf(&RancherKubernetesEngineConfig{})},
+		conversion.GeneratedDeepCopyFunc{Fn: func(in interface{}, out interface{}, c *conversion.Cloner) error {
+			in.(*RancherSystemImages).DeepCopyInto(out.(*RancherSystemImages))
+			return nil
+		}, InType: reflect.TypeOf(&RancherSystemImages{})},
 		conversion.GeneratedDeepCopyFunc{Fn: func(in interface{}, out interface{}, c *conversion.Cloner) error {
 			in.(*Recipient).DeepCopyInto(out.(*Recipient))
 			return nil
@@ -743,10 +711,6 @@ func RegisterDeepCopies(scheme *runtime.Scheme) error {
 			in.(*SetPasswordInput).DeepCopyInto(out.(*SetPasswordInput))
 			return nil
 		}, InType: reflect.TypeOf(&SetPasswordInput{})},
-		conversion.GeneratedDeepCopyFunc{Fn: func(in interface{}, out interface{}, c *conversion.Cloner) error {
-			in.(*SetPodSecurityPolicyTemplateInput).DeepCopyInto(out.(*SetPodSecurityPolicyTemplateInput))
-			return nil
-		}, InType: reflect.TypeOf(&SetPodSecurityPolicyTemplateInput{})},
 		conversion.GeneratedDeepCopyFunc{Fn: func(in interface{}, out interface{}, c *conversion.Cloner) error {
 			in.(*Setting).DeepCopyInto(out.(*Setting))
 			return nil
@@ -1006,22 +970,6 @@ func (in *AlertStatus) DeepCopy() *AlertStatus {
 }
 
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *AlertSystemImages) DeepCopyInto(out *AlertSystemImages) {
-	*out = *in
-	return
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new AlertSystemImages.
-func (in *AlertSystemImages) DeepCopy() *AlertSystemImages {
-	if in == nil {
-		return nil
-	}
-	out := new(AlertSystemImages)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *AuthAppInput) DeepCopyInto(out *AuthAppInput) {
 	*out = *in
 	return
@@ -1129,11 +1077,6 @@ func (in *AuthnConfig) DeepCopyInto(out *AuthnConfig) {
 			(*out)[key] = val
 		}
 	}
-	if in.SANs != nil {
-		in, out := &in.SANs, &out.SANs
-		*out = make([]string, len(*in))
-		copy(*out, *in)
-	}
 	return
 }
 
@@ -1202,11 +1145,6 @@ func (in *BaseService) DeepCopyInto(out *BaseService) {
 		for key, val := range *in {
 			(*out)[key] = val
 		}
-	}
-	if in.ExtraBinds != nil {
-		in, out := &in.ExtraBinds, &out.ExtraBinds
-		*out = make([]string, len(*in))
-		copy(*out, *in)
 	}
 	return
 }
@@ -1356,29 +1294,6 @@ func (in *ChangePasswordInput) DeepCopy() *ChangePasswordInput {
 		return nil
 	}
 	out := new(ChangePasswordInput)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *CloudProvider) DeepCopyInto(out *CloudProvider) {
-	*out = *in
-	if in.CloudConfig != nil {
-		in, out := &in.CloudConfig, &out.CloudConfig
-		*out = make(map[string]string, len(*in))
-		for key, val := range *in {
-			(*out)[key] = val
-		}
-	}
-	return
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new CloudProvider.
-func (in *CloudProvider) DeepCopy() *CloudProvider {
-	if in == nil {
-		return nil
-	}
-	out := new(CloudProvider)
 	in.DeepCopyInto(out)
 	return out
 }
@@ -2523,22 +2438,6 @@ func (in *Filter) DeepCopy() *Filter {
 }
 
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *GenerateKubeConfigOutput) DeepCopyInto(out *GenerateKubeConfigOutput) {
-	*out = *in
-	return
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new GenerateKubeConfigOutput.
-func (in *GenerateKubeConfigOutput) DeepCopy() *GenerateKubeConfigOutput {
-	if in == nil {
-		return nil
-	}
-	out := new(GenerateKubeConfigOutput)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *GithubClusterConfig) DeepCopyInto(out *GithubClusterConfig) {
 	*out = *in
 	return
@@ -3344,22 +3243,6 @@ func (in *LoggingStatus) DeepCopy() *LoggingStatus {
 }
 
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *LoggingSystemImages) DeepCopyInto(out *LoggingSystemImages) {
-	*out = *in
-	return
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new LoggingSystemImages.
-func (in *LoggingSystemImages) DeepCopy() *LoggingSystemImages {
-	if in == nil {
-		return nil
-	}
-	out := new(LoggingSystemImages)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *NetworkConfig) DeepCopyInto(out *NetworkConfig) {
 	*out = *in
 	if in.Options != nil {
@@ -3480,7 +3363,7 @@ func (in *NodeDriver) DeepCopyInto(out *NodeDriver) {
 	*out = *in
 	out.TypeMeta = in.TypeMeta
 	in.ObjectMeta.DeepCopyInto(&out.ObjectMeta)
-	in.Spec.DeepCopyInto(&out.Spec)
+	out.Spec = in.Spec
 	in.Status.DeepCopyInto(&out.Status)
 	return
 }
@@ -3541,11 +3424,6 @@ func (in *NodeDriverList) DeepCopyObject() runtime.Object {
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *NodeDriverSpec) DeepCopyInto(out *NodeDriverSpec) {
 	*out = *in
-	if in.WhitelistDomains != nil {
-		in, out := &in.WhitelistDomains, &out.WhitelistDomains
-		*out = make([]string, len(*in))
-		copy(*out, *in)
-	}
 	return
 }
 
@@ -4193,22 +4071,6 @@ func (in *Pipeline) DeepCopyObject() runtime.Object {
 }
 
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *PipelineCondition) DeepCopyInto(out *PipelineCondition) {
-	*out = *in
-	return
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new PipelineCondition.
-func (in *PipelineCondition) DeepCopy() *PipelineCondition {
-	if in == nil {
-		return nil
-	}
-	out := new(PipelineCondition)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *PipelineExecution) DeepCopyInto(out *PipelineExecution) {
 	*out = *in
 	out.Namespaced = in.Namespaced
@@ -4371,11 +4233,6 @@ func (in *PipelineExecutionSpec) DeepCopy() *PipelineExecutionSpec {
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *PipelineExecutionStatus) DeepCopyInto(out *PipelineExecutionStatus) {
 	*out = *in
-	if in.Conditions != nil {
-		in, out := &in.Conditions, &out.Conditions
-		*out = make([]PipelineCondition, len(*in))
-		copy(*out, *in)
-	}
 	if in.Stages != nil {
 		in, out := &in.Stages, &out.Stages
 		*out = make([]StageStatus, len(*in))
@@ -4486,22 +4343,6 @@ func (in *PipelineStatus) DeepCopy() *PipelineStatus {
 }
 
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *PipelineSystemImages) DeepCopyInto(out *PipelineSystemImages) {
-	*out = *in
-	return
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new PipelineSystemImages.
-func (in *PipelineSystemImages) DeepCopy() *PipelineSystemImages {
-	if in == nil {
-		return nil
-	}
-	out := new(PipelineSystemImages)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *PodSecurityPolicyTemplate) DeepCopyInto(out *PodSecurityPolicyTemplate) {
 	*out = *in
 	out.TypeMeta = in.TypeMeta
@@ -4556,68 +4397,6 @@ func (in *PodSecurityPolicyTemplateList) DeepCopy() *PodSecurityPolicyTemplateLi
 
 // DeepCopyObject is an autogenerated deepcopy function, copying the receiver, creating a new runtime.Object.
 func (in *PodSecurityPolicyTemplateList) DeepCopyObject() runtime.Object {
-	if c := in.DeepCopy(); c != nil {
-		return c
-	} else {
-		return nil
-	}
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *PodSecurityPolicyTemplateProjectBinding) DeepCopyInto(out *PodSecurityPolicyTemplateProjectBinding) {
-	*out = *in
-	out.Namespaced = in.Namespaced
-	out.TypeMeta = in.TypeMeta
-	in.ObjectMeta.DeepCopyInto(&out.ObjectMeta)
-	return
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new PodSecurityPolicyTemplateProjectBinding.
-func (in *PodSecurityPolicyTemplateProjectBinding) DeepCopy() *PodSecurityPolicyTemplateProjectBinding {
-	if in == nil {
-		return nil
-	}
-	out := new(PodSecurityPolicyTemplateProjectBinding)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyObject is an autogenerated deepcopy function, copying the receiver, creating a new runtime.Object.
-func (in *PodSecurityPolicyTemplateProjectBinding) DeepCopyObject() runtime.Object {
-	if c := in.DeepCopy(); c != nil {
-		return c
-	} else {
-		return nil
-	}
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *PodSecurityPolicyTemplateProjectBindingList) DeepCopyInto(out *PodSecurityPolicyTemplateProjectBindingList) {
-	*out = *in
-	out.TypeMeta = in.TypeMeta
-	out.ListMeta = in.ListMeta
-	if in.Items != nil {
-		in, out := &in.Items, &out.Items
-		*out = make([]PodSecurityPolicyTemplateProjectBinding, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	return
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new PodSecurityPolicyTemplateProjectBindingList.
-func (in *PodSecurityPolicyTemplateProjectBindingList) DeepCopy() *PodSecurityPolicyTemplateProjectBindingList {
-	if in == nil {
-		return nil
-	}
-	out := new(PodSecurityPolicyTemplateProjectBindingList)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyObject is an autogenerated deepcopy function, copying the receiver, creating a new runtime.Object.
-func (in *PodSecurityPolicyTemplateProjectBindingList) DeepCopyObject() runtime.Object {
 	if c := in.DeepCopy(); c != nil {
 		return c
 	} else {
@@ -5277,22 +5056,6 @@ func (in *ProjectStatus) DeepCopy() *ProjectStatus {
 }
 
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *PublicEndpoint) DeepCopyInto(out *PublicEndpoint) {
-	*out = *in
-	return
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new PublicEndpoint.
-func (in *PublicEndpoint) DeepCopy() *PublicEndpoint {
-	if in == nil {
-		return nil
-	}
-	out := new(PublicEndpoint)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *PublishImageConfig) DeepCopyInto(out *PublishImageConfig) {
 	*out = *in
 	return
@@ -5459,11 +5222,6 @@ func (in *RancherKubernetesEngineConfig) DeepCopyInto(out *RancherKubernetesEngi
 	in.Services.DeepCopyInto(&out.Services)
 	in.Network.DeepCopyInto(&out.Network)
 	in.Authentication.DeepCopyInto(&out.Authentication)
-	if in.AddonsInclude != nil {
-		in, out := &in.AddonsInclude, &out.AddonsInclude
-		*out = make([]string, len(*in))
-		copy(*out, *in)
-	}
 	out.SystemImages = in.SystemImages
 	in.Authorization.DeepCopyInto(&out.Authorization)
 	if in.PrivateRegistries != nil {
@@ -5472,7 +5230,6 @@ func (in *RancherKubernetesEngineConfig) DeepCopyInto(out *RancherKubernetesEngi
 		copy(*out, *in)
 	}
 	in.Ingress.DeepCopyInto(&out.Ingress)
-	in.CloudProvider.DeepCopyInto(&out.CloudProvider)
 	return
 }
 
@@ -5482,6 +5239,23 @@ func (in *RancherKubernetesEngineConfig) DeepCopy() *RancherKubernetesEngineConf
 		return nil
 	}
 	out := new(RancherKubernetesEngineConfig)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *RancherSystemImages) DeepCopyInto(out *RancherSystemImages) {
+	*out = *in
+	out.RKESystemImages = in.RKESystemImages
+	return
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new RancherSystemImages.
+func (in *RancherSystemImages) DeepCopy() *RancherSystemImages {
+	if in == nil {
+		return nil
+	}
+	out := new(RancherSystemImages)
 	in.DeepCopyInto(out)
 	return out
 }
@@ -5689,22 +5463,6 @@ func (in *SetPasswordInput) DeepCopy() *SetPasswordInput {
 		return nil
 	}
 	out := new(SetPasswordInput)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *SetPodSecurityPolicyTemplateInput) DeepCopyInto(out *SetPodSecurityPolicyTemplateInput) {
-	*out = *in
-	return
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new SetPodSecurityPolicyTemplateInput.
-func (in *SetPodSecurityPolicyTemplateInput) DeepCopy() *SetPodSecurityPolicyTemplateInput {
-	if in == nil {
-		return nil
-	}
-	out := new(SetPodSecurityPolicyTemplateInput)
 	in.DeepCopyInto(out)
 	return out
 }

@@ -81,12 +81,13 @@ type TargetPod struct {
 }
 
 type TargetEvent struct {
-	EventType    string `json:"eventType,omitempty" norman:"required,options=Normal|Warning,default=Warning"`
+	Type         string `json:"type,omitempty" norman:"required,options=Normal|Warning,default=Warning"`
 	ResourceKind string `json:"resourceKind,omitempty" norman:"required,options=Pod|Node|Deployment|Statefulset|Daemonset"`
 }
 
 type TargetWorkload struct {
 	WorkloadID          string            `json:"workloadId,omitempty"`
+	Type                string            `json:"type,omitempty" norman:"required,options=deployment|statefulset|daemonset,default=deployment"`
 	Selector            map[string]string `json:"selector,omitempty"`
 	AvailablePercentage int               `json:"availablePercentage,omitempty" norman:"required,min=1,max=100,default=70"`
 }
@@ -155,9 +156,4 @@ type WebhookConfig struct {
 }
 
 type NotifierStatus struct {
-}
-
-type AlertSystemImages struct {
-	AlertManager       string `json:"alertManager,omitempty"`
-	AlertManagerHelper string `json:"alertManagerHelper,omitempty"`
 }
