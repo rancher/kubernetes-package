@@ -67,11 +67,20 @@ else
   INFLUXDB_VOLUME="hostPath:\n          path: $INFLUXDB_HOST_PATH"
 fi
 
+# Addons Images
+# If any of these versions are updated, please also update them in
+# addon-templates/README.md
 
 ADDONS_DIR=/etc/kubernetes/addons
-# image list generate from rancher/types
-# https://github.com/rancher/types/blob/master/apis/management.cattle.io/v3/k8s_defaults.go
-source addons_image_list
+
+DASHBOARD_IMAGE=kubernetes-dashboard-amd64:v1.8.0
+KUBEDNS_IMAGE=k8s-dns-kube-dns-amd64:1.14.7
+DNSMASQ_IMAGE=k8s-dns-dnsmasq-nanny-amd64:1.14.7
+DNS_SIDECAR_IMAGE=k8s-dns-sidecar-amd64:1.14.7
+GRAFANA_IMAGE=heapster-grafana-amd64:v4.4.3
+HEAPSTER_IMAGE=heapster-amd64:v1.5.0
+INFLUXDB_IMAGE=heapster-influxdb-amd64:v1.3.3
+TILLER_IMAGE=tiller:v2.7.2
 
 for f in $(find $ADDONS_DIR -name '*.yaml'); do
   sed -i "s|\$DOCKER_IO_REGISTRY|$DOCKER_IO_REGISTRY|g" ${f}
