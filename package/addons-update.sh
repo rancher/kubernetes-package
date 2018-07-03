@@ -74,9 +74,9 @@ fi
 ADDONS_DIR=/etc/kubernetes/addons
 
 DASHBOARD_IMAGE=kubernetes-dashboard-amd64:v1.8.3
-KUBEDNS_IMAGE=k8s-dns-kube-dns-amd64:1.14.9
-DNSMASQ_IMAGE=k8s-dns-dnsmasq-nanny-amd64:1.14.9
-DNS_SIDECAR_IMAGE=k8s-dns-sidecar-amd64:1.14.9
+KUBEDNS_IMAGE=k8s-dns-kube-dns-amd64:1.14.10
+DNSMASQ_IMAGE=k8s-dns-dnsmasq-nanny-amd64:1.14.10
+DNS_SIDECAR_IMAGE=k8s-dns-sidecar-amd64:1.14.10
 GRAFANA_IMAGE=heapster-grafana-amd64:v4.4.3
 HEAPSTER_IMAGE=heapster-amd64:v1.5.2
 INFLUXDB_IMAGE=heapster-influxdb-amd64:v1.3.3
