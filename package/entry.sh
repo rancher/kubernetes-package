@@ -14,6 +14,7 @@ done
 
 /usr/bin/update-rancher-ssl
 
+# k8s service certificate
 UUID=$(curl -s http://rancher-metadata/2015-12-19/stacks/Kubernetes/services/kubernetes/uuid)
 ACTION=$(curl -s -u $CATTLE_ACCESS_KEY:$CATTLE_SECRET_KEY "$CATTLE_URL/services?uuid=$UUID" | jq -r '.data[0].actions.certificate')
 KUBERNETES_URL=${KUBERNETES_URL:-https://kubernetes.kubernetes.rancher.internal:6443}
@@ -47,6 +48,18 @@ users:
   user:
     token: "$TOKEN"
 EOF
+fi
+# etcd service certificate
+ETCD_UUID=$(curl -s http://rancher-metadata/2015-12-19/stacks/Kubernetes/services/etcd/uuid)
+ETCD_ACTION=$(curl -s -u $CATTLE_ACCESS_KEY:$CATTLE_SECRET_KEY "$CATTLE_URL/services?uuid=$ETCD_UUID" | jq -r '.data[0].actions.certificate')
+
+if [ -n "$ETCD_ACTION" ]; then
+    mkdir -p /etc/kubernetes/etcd
+    cd /etc/kubernetes/etcd
+    curl -s -u $CATTLE_ACCESS_KEY:$CATTLE_SECRET_KEY -X POST $ETCD_ACTION > etcd_certs.zip
+    unzip -o etcd_certs.zip
+    cd $OLDPWD
+
 fi
 
 cat > /etc/kubernetes/authconfig << EOF
