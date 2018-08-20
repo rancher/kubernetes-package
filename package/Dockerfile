@@ -5,7 +5,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -y \
     install apt-transport-https \
     && echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ wheezy main" > \
     /etc/apt/sources.list.d/azure-cli.list \
-    && apt-key adv --keyserver packages.microsoft.com --recv-keys 417A0893 \
+    && curl -L https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
     && DEBIAN_FRONTEND=noninteractive apt-get update -y \
     && DEBIAN_FRONTEND=noninteractive apt-get -yy -q \
     install \
@@ -29,6 +29,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -y \
     cifs-utils \
     azure-cli \
     open-iscsi \
+    xfsprogs \
     && DEBIAN_FRONTEND=noninteractive apt-get autoremove -y \
     && DEBIAN_FRONTEND=noninteractive apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
