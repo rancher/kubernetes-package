@@ -29,6 +29,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -y \
     cifs-utils \
     azure-cli \
     open-iscsi \
+    xfsprogs \
     && DEBIAN_FRONTEND=noninteractive apt-get autoremove -y \
     && DEBIAN_FRONTEND=noninteractive apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
