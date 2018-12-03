@@ -79,12 +79,36 @@ contexts:
   name: webhook
 EOF
 
-# generate Azure cloud provider config
-if echo ${@} | grep -q "cloud-provider=azure"; then
-  if [ "$1" == "kubelet" ] || [ "$1" == "kube-apiserver" ] || [ "$1" == "kube-controller-manager" ]; then
-    source utils.sh
-    get_azure_config  > /etc/kubernetes/cloud-provider-config
-  fi
+# Cloud provider config (if cloudprovider is not rancher)
+if ! echo ${@} | grep -q "cloud-provider=rancher"; then
+    # Only applicable to kubelet/kube-apiserver/kube-controller-manager
+    if [ "$1" == "kubelet" ] || [ "$1" == "kube-apiserver" ] || [ "$1" == "kube-controller-manager" ]; then
+        # Check if Azure specific cloud provider config needs to be generated
+        if echo ${@} | grep -q "cloud-provider=azure"; then
+            AZURE_CLOUD_PROVIDER=1
+            source utils.sh
+            get_azure_config  > /etc/kubernetes/cloud-provider-config
+        fi
+        # Check if additional cloud provider config needs to be applied
+        if [[ -n "`echo -n "$CLOUD_PROVIDER_CONFIG"`" ]]; then
+            # If Azure cloud provider is not configured, write cloud provider config
+            if [[ -z ${AZURE_CLOUD_PROVIDER+x} ]]; then
+                echo -n "$CLOUD_PROVIDER_CONFIG" > /etc/kubernetes/cloud-provider-config
+            # If Azure cloud provider is configured, append to file instead of overwrite
+            else
+                echo -n "$CLOUD_PROVIDER_CONFIG" >> /etc/kubernetes/cloud-provider-config
+            fi
+        fi
+    fi
+fi
+
+# Check for configuration errors
+if echo ${@} | grep -q "cloud-config=/etc/kubernetes/cloud-provider-config"; then
+    if [ ! -f /etc/kubernetes/cloud-provider-config ]; then
+        echo "Configuration error, cloud-provider-config parameter configured but no file present"
+        echo "Cloud provider config can only be configured when using 'azure' or 'aws' cloudprovider"
+        exit 1
+    fi
 fi
 
 if [ "$1" == "kubelet" ]; then
