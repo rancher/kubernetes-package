@@ -74,13 +74,13 @@ fi
 ADDONS_DIR=/etc/kubernetes/addons
 
 DASHBOARD_IMAGE=kubernetes-dashboard-amd64:v1.8.3
-KUBEDNS_IMAGE=k8s-dns-kube-dns-amd64:1.14.10
-DNSMASQ_IMAGE=k8s-dns-dnsmasq-nanny-amd64:1.14.10
-DNS_SIDECAR_IMAGE=k8s-dns-sidecar-amd64:1.14.10
+KUBEDNS_IMAGE=k8s-dns-kube-dns-amd64:1.14.13
+DNSMASQ_IMAGE=k8s-dns-dnsmasq-nanny-amd64:1.14.13
+DNS_SIDECAR_IMAGE=k8s-dns-sidecar-amd64:1.14.13
 GRAFANA_IMAGE=heapster-grafana-amd64:v4.4.3
-HEAPSTER_IMAGE=heapster-amd64:v1.5.2
+HEAPSTER_IMAGE=heapster-amd64:v1.5.4
 INFLUXDB_IMAGE=heapster-influxdb-amd64:v1.3.3
-TILLER_IMAGE=tiller:v2.9.1
+TILLER_IMAGE=tiller:v2.11.0
 
 for f in $(find $ADDONS_DIR -name '*.yaml'); do
   sed -i "s|\$DOCKER_IO_REGISTRY|$DOCKER_IO_REGISTRY|g" ${f}
