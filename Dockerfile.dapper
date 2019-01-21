@@ -19,7 +19,7 @@ RUN wget -O - ${!DOCKER_URL} > /usr/bin/docker && chmod +x /usr/bin/docker
 
 ENV DOWNLOAD /usr/src
 
-ENV KUBERNETES_DOWNLOAD https://github.com/rancher/kubernetes/releases/download/v1.12.3-rancher1/kubernetes-server-linux-amd64.tar.gz
+ENV KUBERNETES_DOWNLOAD https://github.com/rancher/kubernetes/releases/download/v1.12.5-rancher1/kubernetes-server-linux-amd64.tar.gz
 RUN wget -O - $KUBERNETES_DOWNLOAD > $DOWNLOAD/k8s.tar.gz
 
 ENV DAPPER_ENV REPO TAG
